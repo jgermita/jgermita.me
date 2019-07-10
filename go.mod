@@ -1,4 +1,4 @@
-module github.com/heroku/go-getting-started
+module jgermita.me
 
 go 1.12
 
