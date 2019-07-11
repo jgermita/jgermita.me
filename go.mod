@@ -1,4 +1,4 @@
-module github.com/jgermita/jgermita.me
+module github.com/jgermita/jgermita.me/app
 
 go 1.12
 
