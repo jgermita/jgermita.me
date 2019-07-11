@@ -1,3 +1,3 @@
-module github.com/jgermita/jgermita.me
+module jgermita.me
 
 go 1.12
