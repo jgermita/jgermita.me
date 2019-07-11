@@ -1,4 +1,3 @@
-module jgermita.me
+module github.com/jgermita/jgermita.me
 
-
-// +heroku goVersion 1.12
+go 1.12
