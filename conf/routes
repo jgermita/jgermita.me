@@ -13,6 +13,8 @@ GET     /level5                                 App.level5
 GET     /projects                               App.projects
 GET     /first                                  App.first
 GET     /software                               App.software
+GET     /blog                                   App.blog
+GET     /level5/:robot                          App.robot
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
