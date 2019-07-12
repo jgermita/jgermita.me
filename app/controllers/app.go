@@ -38,13 +38,13 @@ func (c App) Blog() revel.Result {
 	return c.Render()
 }
 
-var allRobots [5]string
-
 func (c App) Robot() revel.Result {
-	allRobots := [5]string{"sandstorm", "sideslip", "faultline", "echo", "blackout"}
+	var allRobots = [5]string{"sandstorm", "sideslip", "faultline", "echo", "blackout"}
 
 	robot := strings.ToLower(c.Params.Route.Get("robot"))
 	var valid = false
+
+	var img string
 
 	for i := 0; i < 5; i++ {
 		if robot == allRobots[i] {
@@ -55,9 +55,13 @@ func (c App) Robot() revel.Result {
 
 	if !valid {
 		robot = "Invalid Robot " + robot + "!"
+		img = "l5logo.png"
+	} else {
+		robot = strings.Title(robot)
+		img = strings.ToLower(robot) + ".png"
 	}
 
-	robot = strings.Title(robot)
+	img = "/public/img/level5assets/" + img
 
-	return c.Render(robot)
+	return c.Render(robot, img)
 }
