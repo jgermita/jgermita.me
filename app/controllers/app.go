@@ -3,11 +3,15 @@ package controllers
 import (
 	"strings"
 
+	"github.com/jgermita/jgermita.me/app/model"
+
 	"github.com/revel/revel"
 )
 
 type App struct {
 	*revel.Controller
+
+	Database *model.Database
 }
 
 func (c App) Index() revel.Result {
@@ -15,10 +19,6 @@ func (c App) Index() revel.Result {
 }
 
 func (c App) Me() revel.Result {
-	return c.Render()
-}
-
-func (c App) Level5() revel.Result {
 	return c.Render()
 }
 
@@ -38,30 +38,20 @@ func (c App) Blog() revel.Result {
 	return c.Render()
 }
 
+func (c App) Level5() revel.Result {
+
+	db := new(model.Database)
+
+	var bots = db.GetAllRobots()
+
+	return c.Render(bots)
+}
 func (c App) Robot() revel.Result {
-	var allRobots = [5]string{"sandstorm", "sideslip", "faultline", "echo", "blackout"}
 
 	robot := strings.ToLower(c.Params.Route.Get("robot"))
-	var valid = false
+	robot = strings.Title(robot)
+	db := new(model.Database)
 
-	var img string
-
-	for i := 0; i < 5; i++ {
-		if robot == allRobots[i] {
-			valid = true
-		}
-
-	}
-
-	if !valid {
-		robot = "Invalid Robot " + robot + "!"
-		img = "l5logo.png"
-	} else {
-		robot = strings.Title(robot)
-		img = strings.ToLower(robot) + ".png"
-	}
-
-	img = "/public/img/level5assets/" + img
-
-	return c.Render(robot, img)
+	var bot = db.GetRobot(robot)
+	return c.Render(bot)
 }

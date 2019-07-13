@@ -1,6 +1,7 @@
 package app
 
 import (
+	"github.com/jgermita/jgermita.me/app/model"
 	"github.com/revel/revel"
 )
 
@@ -10,6 +11,8 @@ var (
 
 	// BuildTime revel app build-time (ldflags)
 	BuildTime string
+
+	db *model.Database
 )
 
 func init() {
@@ -36,6 +39,7 @@ func init() {
 	// revel.OnAppStart(ExampleStartupScript)
 	// revel.OnAppStart(InitDB)
 	// revel.OnAppStart(FillCache)
+	db.OpenDatabase("./app.db")
 }
 
 // HeaderFilter adds common security headers
