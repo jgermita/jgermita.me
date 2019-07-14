@@ -19,7 +19,7 @@ type Database struct {
 
 // Open the database connection
 func (database *Database) OpenDatabase(filename string) {
-	fileName = filename
+	fileName = "public/" + filename
 
 }
 

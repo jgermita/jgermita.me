@@ -1,25 +1,126 @@
-{{set . "title" "Contact Me"}}
+{{set . "title" "Robot"}}
 {{template "header.html" .}}
+
 <body>
 
-  
-      <div id="main">
-          <div class="header">
-              <h1>Robot Info</h1>
-          </div>
-  
-          <div class="content">
-              <h1>{{.robot}}</h1>
-              
-            <img class="pure-img-responsive" src={{.img}}>
-          </div>
+
+  <div id="main">
+    <div class="header">
+      <h1>Robot Info</h1>
+    </div>
+
+    <div class="content">
+
+      <center>
+        <br>
+        <img class="pure-img-responsive" src="/public/img/level5assets/{{.bot.Logo}}">
+
+      </center>
+      <div class="pure-g">
+
+
+        <div class="pure-u-11-24">
+          <h2>Stats</h2>
+          <table class="pure-table pure-table-horizontal">
+
+            <tbody>
+              <tr>
+                <th>Name</th>
+                <td>{{.bot.Name}}</td>
+              </tr>
+
+              <tr>
+                <th>Weight Class</th>
+                <td>{{.bot.WeightClass}}</td>
+              </tr>
+
+              <tr>
+                <th>Weapon</th>
+                <td>{{.bot.Weapon}}</td>
+              </tr>
+              <tr>
+                <th>Status</th>
+                <td>{{.bot.Status}}</td>
+              </tr>
+              <tr>
+                <th>W-L</th>
+                <td>{{.bot.Wins}} - {{.bot.Losses}} ({{.bot.Winrate}}%)</td>
+              </tr>
+              <tr>
+                <th>Event History</th>
+                <td>{{.bot.Events}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <br>
+
+        </div>
+        <div class="pure-u-1-12"></div>
+        <div class="pure-u-11-24">
+
+
+          <br>
+          <img class="pure-img-responsive" src="/public/img/level5assets/robotpics/{{.bot.Img}}">
+        </div>
       </div>
+
+      <h2>Fight History</h2>
+      <table class="pure-table">
+        <thead>
+          <tr>
+            <th>
+              <img class="pure-img-responsive" src="/public/img/video.png"></th>
+            <th>Event</th>
+            <th>Opponent</th>
+            <th>Win</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {{range .bot.Fights}}
+          <tr>
+            <td>
+              {{if .VideoExists}}
+              <a href="https://www.youtube.com/watch?v={{.Video}}" target="_blank">
+                <img class="pure-img-responsive" src="/public/img/video.png">
+              </a>
+              {{else}}
+
+              {{end}}
+
+            </td>
+
+
+            <td>{{.Event}}</td>
+            <td>{{.OpponentRobot}}</td>
+            <td>
+              {{if .MyWin}}
+              ✅
+              {{else}}
+              ❌
+              {{end}}
+
+            </td>
+          </tr>
+          {{end}}
+        </tbody>
+      </table>
+
+      <h2>Media</h2>
+      {{range .bot.Media}}
+      
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/{{.}}" frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+      {{end}}
+    </div>
   </div>
-  
-  
-  
-  
+  </div>
+
+
+
+
   <script src="js/ui.js"></script>
-  
-  </body>
+
+</body>
 {{template "footer.html" .}}

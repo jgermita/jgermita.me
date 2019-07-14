@@ -14,7 +14,7 @@
         </div>
 
         <div class="content">
-            
+
             <h2 class="content-subhead">Small, violent robots</h2>
             <img class="pure-img-responsive" src="/public/img/l5banner.jpg">
             <p>
@@ -36,64 +36,23 @@
                         <th>Weight Class</th>
                         <th>Weapon Type</th>
                         <th>Status</th>
-                        <th>Wins</th>
-                        <th>Losses</th>
+                        <th>W-L</th>
                         <th>Events</th>
                     </tr>
                 </thead>
 
                 <tbody>
+                    {{range .bots}}
                     <tr>
-                        <td><a href="/level5/Sandstorm">Sandstorm</a></td>
-                        <td>3lb</td>
-                        <td>Vertical Spinner</td>
-                        <td>In Service</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>Destruction Under the Stars 2018, Sparklecon Smash 2019, Destruction Under the Stars 2019
+                        <td><a href="/level5/{{.Name}}">{{.Name}}</a></td>
+                        <td>{{.WeightClass}}</td>
+                        <td>{{.Weapon}}</td>
+                        <td>{{.Status}}</td>
+                        <td>{{.Wins}} - {{.Losses}} ({{.Winrate}}%)</td>
+                        <td>{{.Events}}
                         </td>
                     </tr>
-
-                    <tr>
-                        <td><a href="/level5/Sideslip">Sideslip</a></td>
-                        <td>3lb</td>
-                        <td>Wedge</td>
-                        <td>In Service</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>Destruction Under the Stars 2019</td>
-                    </tr>
-
-                    <tr>
-                        <td><a href="/level5/Faultline">Faultline</a></td>
-                        <td>1lb Plastic</td>
-                        <td>Vertical Spinner</td>
-                        <td>In Service</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>Destruction Under the Stars 2019</td>
-                    </tr>
-
-                    <tr>
-                        <td><a href="/level5/Echo">Echo</a></td>
-                        <td>12lb</td>
-                        <td>Vertical Spinner</td>
-                        <td>In Service</td>
-                        <td>0</td>
-                        <td>2</td>
-                        <td>Sparklecon Smash 2019</td>
-                    </tr>
-
-                    <tr>
-                        <td><a href="/level5/Blackout">Blackout</a></td>
-                        <td>12lb</td>
-                        <td>Vertical Spinner</td>
-                        <td>retired</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-
+                    {{end}}
                 </tbody>
             </table>
 
