@@ -39,7 +39,7 @@ func init() {
 	// revel.OnAppStart(ExampleStartupScript)
 	// revel.OnAppStart(InitDB)
 	// revel.OnAppStart(FillCache)
-	db.OpenDatabase("./app.db")
+	db.OpenDatabase("app.db")
 }
 
 // HeaderFilter adds common security headers

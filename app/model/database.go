@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"log"
 	"math"
+	"strconv"
 	"strings"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -19,7 +20,7 @@ type Database struct {
 
 // Open the database connection
 func (database *Database) OpenDatabase(filename string) {
-	fileName = "public/" + filename
+	fileName = "./" + filename
 
 }
 
@@ -41,8 +42,8 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 		Name        string
 		WeightClass string
 		Status      string
-		Wins        int
-		Losses      int
+		Wins        string
+		Losses      string
 		Events      string
 		logo        string
 		img         string
@@ -57,7 +58,7 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 	}
 	defer rows.Close()
 	for rows.Next() {
-		err := rows.Scan(&Id, &Name, &WeightClass, &weapon, &Status, &Wins, &Losses, &Events, &logo, &img, &media)
+		err := rows.Scan(&Id, &Name, &WeightClass, &weapon, &Status, &logo, &img, &media)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -65,9 +66,33 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 		thisBot.Name = strings.Title(Name)
 		thisBot.WeightClass = WeightClass
 		thisBot.Status = Status
-		thisBot.Wins = Wins
-		thisBot.Losses = Losses
-		thisBot.Events = Events
+
+		winCount, err := db.Query("select sum(case when myWin=\"true\" then 1 else 0 end) from fights where myRobot = ?", thisBot.Name)
+		winCount.Next()
+		err = winCount.Scan(&Wins)
+		thisBot.Wins, err = strconv.Atoi(Wins)
+		defer winCount.Close()
+
+		lossCount, err := db.Query("select sum(case when myWin=\"false\" then 1 else 0 end) from fights where myRobot = ?", thisBot.Name)
+		lossCount.Next()
+		err = lossCount.Scan(&Losses)
+		thisBot.Losses, err = strconv.Atoi(Losses)
+		defer lossCount.Close()
+
+		thisBot.Events = ""
+
+		allEvents, err := db.Query("select distinct event from fights where myRobot = ?", thisBot.Name)
+		defer allEvents.Close()
+		for allEvents.Next() {
+			var thisEvent string
+			err := allEvents.Scan(&thisEvent)
+			if err != nil {
+				log.Fatal(err)
+			}
+			thisBot.Events = thisBot.Events + thisEvent + ", "
+
+		}
+
 		thisBot.Logo = logo
 		thisBot.Img = img
 		thisBot.Media = strings.Split(media, ",")
@@ -76,7 +101,11 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 			thisBot.Media = nil
 		}
 		thisBot.Weapon = weapon
-		thisBot.Winrate = math.Floor(float64(Wins)/(float64(Wins)+float64(Losses))*10000) / 100
+		thisBot.Winrate = math.Floor(float64(thisBot.Wins)/(float64(thisBot.Wins)+float64(thisBot.Losses))*10000) / 100
+
+		if thisBot.Wins+thisBot.Losses == 0 {
+			thisBot.Winrate = 0
+		}
 
 		log.Println(Id, Name, WeightClass, Status, Wins, Losses, Events)
 	}
@@ -114,7 +143,7 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 		thisFight.MyWin = MyWin
 		thisFight.Video = Video
 
-		thisFight.VideoExists = Video != " "
+		thisFight.VideoExists = Video != ""
 
 		thisBot.Fights = append(thisBot.Fights, *thisFight)
 
@@ -141,8 +170,8 @@ func (database *Database) GetAllRobots() []Robot {
 		Name        string
 		WeightClass string
 		Status      string
-		Wins        int
-		Losses      int
+		Wins        string
+		Losses      string
 		Events      string
 		logo        string
 		img         string
@@ -157,7 +186,7 @@ func (database *Database) GetAllRobots() []Robot {
 	}
 	defer rows.Close()
 	for rows.Next() {
-		err := rows.Scan(&Id, &Name, &WeightClass, &weapon, &Status, &Wins, &Losses, &Events, &logo, &img, &media)
+		err := rows.Scan(&Id, &Name, &WeightClass, &weapon, &Status, &logo, &img, &media)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -167,16 +196,40 @@ func (database *Database) GetAllRobots() []Robot {
 		thisBot.Name = strings.Title(Name)
 		thisBot.WeightClass = WeightClass
 		thisBot.Status = Status
-		thisBot.Wins = Wins
-		thisBot.Losses = Losses
-		thisBot.Events = Events
+
+		winCount, err := db.Query("select sum(case when myWin=\"true\" then 1 else 0 end) from fights where myRobot = ?", thisBot.Name)
+		winCount.Next()
+		err = winCount.Scan(&Wins)
+		thisBot.Wins, err = strconv.Atoi(Wins)
+		defer winCount.Close()
+
+		lossCount, err := db.Query("select sum(case when myWin=\"false\" then 1 else 0 end) from fights where myRobot = ?", thisBot.Name)
+		lossCount.Next()
+		err = lossCount.Scan(&Losses)
+		thisBot.Losses, err = strconv.Atoi(Losses)
+		defer lossCount.Close()
+
+		thisBot.Events = ""
+
+		allEvents, err := db.Query("select distinct event from fights where myRobot = ?", thisBot.Name)
+		defer allEvents.Close()
+		for allEvents.Next() {
+			var thisEvent string
+			err := allEvents.Scan(&thisEvent)
+			if err != nil {
+				log.Fatal(err)
+			}
+			thisBot.Events = thisBot.Events + thisEvent + ", "
+
+		}
+
 		thisBot.Logo = logo
 		thisBot.Img = img
 		thisBot.Media = strings.Split(media, ",")
 		thisBot.Weapon = weapon
-		thisBot.Winrate = math.Floor(float64(Wins)/(float64(Wins)+float64(Losses))*10000) / 100
+		thisBot.Winrate = math.Floor(float64(thisBot.Wins)/(float64(thisBot.Wins)+float64(thisBot.Losses))*10000) / 100
 
-		if Wins+Losses == 0 {
+		if thisBot.Wins+thisBot.Losses == 0 {
 			thisBot.Winrate = 0
 		}
 
