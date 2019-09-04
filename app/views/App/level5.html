@@ -9,14 +9,15 @@
             <div class="pure-g">
                 <div class="pure-u-1-1">
                     <img class="pure-img-responsive" src="/public/img/l5logosmall.png">
+                    <br><br>
                 </div>
             </div>
         </div>
 
         <div class="content">
 
-            <h2 class="content-subhead">Small, violent robots</h2>
-            <img class="pure-img-responsive" src="/public/img/l5banner.jpg">
+            <h2 class="content-subhead">Combat Robots</h2>
+            <img class="pure-img-responsive" width="75%" src="/public/img/l5banner.jpg">
             <p>
                 Level 5 Robotics is the brand that I've created around the competitive combat robots that I build. All
                 of my robots are designed by myself using Autodesk Inventor and manufactured using a variety of machines
@@ -37,20 +38,30 @@
                         <th>Weapon Type</th>
                         <th>Status</th>
                         <th>W-L</th>
-                        <th>Events</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     {{range .bots}}
                     <tr>
-                        <td><a href="/level5/{{.Name}}">{{.Name}}</a></td>
+                        <td><span class="dot"
+                                style="height: 12px;width: 12px;background-color: #{{.Rgb}};border-radius: 50%;display: inline-block;"></span>
+                            <a href="/level5/{{.Name}}">{{.Name}}</a></td>
                         <td>{{.WeightClass}}</td>
                         <td>{{.Weapon}}</td>
-                        <td>{{.Status}}</td>
-                        <td>{{.Wins}} - {{.Losses}} ({{.Winrate}}%)</td>
-                        <td>{{.Events}}
+                        <td>
+                            {{if eq .Status "In Service"}}
+                            <span style="border-radius: 10%;color: white; padding: 4px; background: green;">
+                                {{else if eq .Status "In Progress"}}
+                                <span style="border-radius: 10%;color: black; padding: 4px; background: #BEBEBE;">
+                                    {{else if eq .Status "Retired"}}
+                                    <span style="border-radius: 10%;color: white; padding: 4px; background: #606060;">
+                                        {{else}}
+                                        <span style="border-radius: 10%;color: black; padding: 4px;">
+                                            {{end}}
+                                            {{.Status}}</span>
                         </td>
+                        <td>{{.Wins}} - {{.Losses}} ({{.Winrate}}%)</td>
                     </tr>
                     {{end}}
                 </tbody>

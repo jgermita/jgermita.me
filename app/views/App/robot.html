@@ -16,18 +16,18 @@
         <img class="pure-img-responsive" src="/public/img/level5assets/{{.bot.Logo}}">
 
       </center>
+      <h2>{{.bot.Name}}</h2>
+      <p>{{.bot.Desc}}</p>
       <div class="pure-g">
 
 
+
         <div class="pure-u-11-24">
+
           <h2>Stats</h2>
           <table class="pure-table pure-table-horizontal">
 
             <tbody>
-              <tr>
-                <th>Name</th>
-                <td>{{.bot.Name}}</td>
-              </tr>
 
               <tr>
                 <th>Weight Class</th>
@@ -40,16 +40,24 @@
               </tr>
               <tr>
                 <th>Status</th>
-                <td>{{.bot.Status}}</td>
+                <td> 
+                    {{if eq .bot.Status "In Service"}} 
+                    <span style="border-radius: 10%;color: white; padding: 4px; background: green;">
+                    {{else if eq .bot.Status "In Progress"}}
+                    <span style="border-radius: 10%;color: black; padding: 4px; background: #BEBEBE;">
+                    {{else if eq .bot.Status "Retired"}}
+                    <span style="border-radius: 10%;color: white; padding: 4px; background: #606060;">
+                    {{else}}
+                    <span style="border-radius: 10%;color: black; padding: 4px;">
+                    {{end}}
+                    {{.bot.Status}}</span> 
+            </td>
               </tr>
               <tr>
                 <th>W-L</th>
                 <td>{{.bot.Wins}} - {{.bot.Losses}} ({{.bot.Winrate}}%)</td>
               </tr>
-              <tr>
-                <th>Event History</th>
-                <td>{{.bot.Events}}</td>
-              </tr>
+              
             </tbody>
           </table>
           <br>
@@ -63,6 +71,44 @@
           <img class="pure-img-responsive" src="/public/img/level5assets/robotpics/{{.bot.Img}}">
         </div>
       </div>
+
+      <h2>Events</h2>
+      <table class="pure-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Event</th>
+            <th>Finish</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {{range .bot.Events}}
+          <tr>
+            <td>{{.Date}}</td>
+            <td>{{.Name}}</td>
+            <td>
+              
+                {{if eq .Finish "1st"}} 
+                <span style="border-radius: 25%;color: black; padding: 4px; background: #FFD739;">
+                {{else if eq .Finish "2nd"}}
+                <span style="border-radius: 25%;color: black; padding: 4px; background: #BEBEBE;">
+                {{else if eq .Finish "3rd"}}
+                <span style="border-radius: 25%;color: white; padding: 4px; background: #BB8644;">
+                {{else if eq .Finish "NR"}}
+                <span style="border-radius: 25%;color: white; padding: 4px; background: #606060;">
+                {{else if eq .Finish ""}}
+                <span >
+                {{else}}
+                <span style="border-radius: 25%;color: white; padding: 4px; background: #0094B2;">
+                {{end}}
+                {{.Finish}}</span>
+            </td>
+          </tr>
+          {{end}}
+        </tbody>
+      </table>
+
 
       <h2>Fight History</h2>
       <table class="pure-table">
@@ -108,7 +154,7 @@
 
       <h2>Media</h2>
       {{range .bot.Media}}
-      
+
       <iframe width="560" height="315" src="https://www.youtube.com/embed/{{.}}" frameborder="0"
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
