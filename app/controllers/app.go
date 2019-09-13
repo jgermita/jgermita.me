@@ -18,40 +18,12 @@ func (c App) Index() revel.Result {
 	return c.Render()
 }
 
-func (c App) Me() revel.Result {
+func (c App) About() revel.Result {
 	return c.Render()
 }
 
-func (c App) Projects() revel.Result {
-	return c.Render()
-}
+func (c App) Dashboard() revel.Result {
+	team := strings.ToLower(c.Params.Route.Get("team"))
 
-func (c App) First() revel.Result {
-	return c.Render()
-}
-
-func (c App) Software() revel.Result {
-	return c.Render()
-}
-
-func (c App) Blog() revel.Result {
-	return c.Render()
-}
-
-func (c App) Level5() revel.Result {
-
-	db := new(model.Database)
-
-	var bots = db.GetAllRobots()
-
-	return c.Render(bots)
-}
-func (c App) Robot() revel.Result {
-
-	robot := strings.ToLower(c.Params.Route.Get("robot"))
-	robot = strings.Title(robot)
-	db := new(model.Database)
-
-	var bot = db.GetRobot(robot)
-	return c.Render(bot)
+	return c.Render(team)
 }

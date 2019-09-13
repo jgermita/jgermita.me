@@ -1,0 +1,73 @@
+{{set . "title" "pickr"}}
+{{template "header.html" .}}
+
+<body>
+
+
+  <div id="main">
+
+
+    <div class="pure-g">
+      <div class="pure-u-1-24 pure-u-xl-1-16"></div>
+      <div class="pure-u-11-24 pure-u-xl-7-8">
+
+        <h3>about pickr</h3>
+        <p>
+          pickr is an app that provides adequate analytics and data display for FIRST Robotics team scouting systems. pickr aims to simplify google sheets based scouting systems by offloading most of the data analysis and visualization so that teams can focus on scouting and making the best picks possible.
+        </p>
+        <br>
+
+        <h3>getting started</h3>
+        <p>
+          Currently, pickr is in closed alpha phase. A getting started guide for alpha testers will be posted soon. 
+        </p>
+        <br>
+
+        <h3>tech</h3>
+        <p>
+           pickr was built using the Revel framework and Golang. 
+        </p>
+        <br>
+        <h4>project "roadmap"</h4>
+        <p>
+          Here's a rough list of features to come for pickr:
+           <ul>
+             <li>Read data from The Blue Alliance via the tbago api</li>
+             <li>Read data from team provided scouting systems using google sheets api</li>
+             <li>Support for multiple user teams</li>
+             <li>Auto-picklist generation using team-provided or -configured weighting factors</li>
+             <li>Picklist management and exporting to google sheets</li>
+             <li>Live picklist management with auto-refresh for alliance selections</li>
+           </ul>
+        </p>
+        <br>
+
+        <h4>thanks</h4>
+        <p>
+          This project wouldn't have been possible without the contributions and insight of the following people and entities
+           <ul>
+             <li>Brian, Javier, and the 2017-2020 scouting teams of Team 5012.</li>
+             <li>Teams 2659 and 973</li>
+             <li>Team 3476</li>
+             <li>other people probably.</li>
+           </ul>
+        </p>
+        
+      </div>
+
+
+
+      <div class="pure-u-1-24 pure-u-xl-1-16"></div>
+
+
+    </div>
+  </div>
+  </div>
+
+
+
+
+  <script src="/public/js/ui.js"></script>
+
+</body>
+{{template "footer.html" .}}
