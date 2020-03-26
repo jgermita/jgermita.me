@@ -30,6 +30,7 @@
 
 
             <h2 class="content-subhead">Robots</h2>
+            {{.record}}
             <table class="pure-table">
                 <thead>
                     <tr>
@@ -62,6 +63,41 @@
                                             {{.Status}}</span>
                         </td>
                         <td>{{.Wins}} - {{.Losses}} ({{.Winrate}}%)</td>
+                    </tr>
+                    {{end}}
+                </tbody>
+            </table>
+            <h2 class="content-subhead">Events</h2>
+            <table class="pure-table">
+                <thead>
+                    <tr>
+                        <th>Event</th>
+                        <th>Robot</th>
+                        <th>Finish</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {{range .events}}
+                    <tr>
+                        <td>{{.Name}}</td>
+                        <td><a href="/level5/{{.Name}}">{{.Robot}}</a></td>
+                        <td>{{if eq .Finish "1st"}} 
+                            <span style="border-radius: 25%;color: black; padding: 4px; background: #FFD739;">
+                            {{else if eq .Finish "2nd"}}
+                            <span style="border-radius: 25%;color: black; padding: 4px; background: #BEBEBE;">
+                            {{else if eq .Finish "3rd"}}
+                            <span style="border-radius: 25%;color: white; padding: 4px; background: #BB8644;">
+                            {{else if eq .Finish "NR"}}
+                            <span style="border-radius: 25%;color: white; padding: 4px; background: #606060;">
+                            {{else if eq .Finish ""}}
+                            <span >
+                            {{else}}
+                            <span style="border-radius: 25%;color: white; padding: 4px; background: #0094B2;">
+                            {{end}}
+                            {{.Finish}}</span></td>
+                        <td>{{.Date}}</td>
                     </tr>
                     {{end}}
                 </tbody>

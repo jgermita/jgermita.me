@@ -79,6 +79,7 @@
             <th>Date</th>
             <th>Event</th>
             <th>Finish</th>
+            <th>Report</th>
           </tr>
         </thead>
 
@@ -104,6 +105,15 @@
                 {{end}}
                 {{.Finish}}</span>
             </td>
+            <td>
+              
+              {{if eq .Report ""}} 
+              
+              {{else}}
+              <a href="{{.Report}}" target="_blank">Report</a>
+              {{end}}
+            </td>
+
           </tr>
           {{end}}
         </tbody>

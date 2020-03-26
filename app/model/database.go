@@ -2,6 +2,7 @@ package model
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 	"math"
 	"strconv"
@@ -51,7 +52,7 @@ func (database *Database) GetAllRobots() []Robot {
 	)
 
 	// Get robot data
-	rows, err := db.Query("select * from robots")
+	rows, err := db.Query("select * from robots order by status, id")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -72,6 +73,50 @@ func (database *Database) GetAllRobots() []Robot {
 	}
 
 	return allRobots
+}
+
+func (database *Database) GetAllEvents() []Event {
+	db, err := sql.Open("sqlite3",
+		fileName)
+	if err != nil {
+		log.Fatal(err)
+	}
+	var allEvents []Event
+
+	var (
+		Name   string
+		Bot    string
+		Finish string
+		Date   string
+	)
+
+	// Get robot data
+	rows, err := db.Query("select name, robot, finish, date from events order by date DESC, robot ASC")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+	for rows.Next() {
+
+		err := rows.Scan(&Name, &Bot, &Finish, &Date)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		var thisEvent Event
+		thisEvent.Name = Name
+		thisEvent.Robot = Bot
+		thisEvent.Finish = Finish
+		thisEvent.Date = Date
+
+		allEvents = append(allEvents, thisEvent)
+	}
+	err = rows.Err()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return allEvents
 }
 
 func (database *Database) GetRobot(nameQuery string) Robot {
@@ -141,7 +186,7 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 
 		}
 
-		allEvents, err := db.Query("select name, finish, date from events where robot = ?", thisBot.Name)
+		allEvents, err := db.Query("select name, finish, date, report from events where robot = ?", thisBot.Name)
 		defer allEvents.Close()
 
 		for allEvents.Next() {
@@ -151,14 +196,16 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 			var eName string
 			var eFinish string
 			var eDate string
+			var eReport string
 
-			err := allEvents.Scan(&eName, &eFinish, &eDate)
+			err := allEvents.Scan(&eName, &eFinish, &eDate, &eReport)
 			if err != nil {
 				log.Fatal(err)
 			}
 			thisEvent.Name = eName
 			thisEvent.Finish = eFinish
 			thisEvent.Date = eDate
+			thisEvent.Report = eReport
 			thisBot.Events = append(thisBot.Events, thisEvent)
 
 		}
@@ -226,4 +273,95 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 	}
 
 	return thisBot
+}
+
+func (database *Database) GetRecord() string {
+	db, err := sql.Open("sqlite3",
+		fileName)
+	if err != nil {
+		log.Fatal(err)
+	}
+	var thisBot Robot
+
+	var (
+		Id          int
+		Name        string
+		WeightClass string
+		Status      string
+		Wins        string
+		Losses      string
+		logo        string
+		img         string
+		media       string
+		weapon      string
+		desc        string
+		rgb         string
+		totalWins   int
+		totalLosses int
+		answer      string
+	)
+
+	totalWins = 0
+	totalLosses = 0
+
+	// Get robot data
+	rows, err := db.Query("select * from robots")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+	for rows.Next() {
+
+		err := rows.Scan(&Id, &Name, &desc, &WeightClass, &weapon, &Status, &logo, &img, &media, &rgb)
+		if err != nil {
+			log.Fatal(err)
+		}
+		thisBot.Id = Id
+		thisBot.Name = strings.Title(Name)
+		thisBot.WeightClass = WeightClass
+		thisBot.Status = Status
+		thisBot.Desc = desc
+		thisBot.Rgb = rgb
+
+		Wins = ""
+		Losses = ""
+		thisBot.Wins = 0
+		winCount, err := db.Query("select sum(case when myWin=\"true\" then 1 else 0 end) from fights where myRobot = ?", thisBot.Name)
+		if err != nil {
+			thisBot.Wins = 0
+		} else {
+			winCount.Next()
+			err = winCount.Scan(&Wins)
+			thisBot.Wins, err = strconv.Atoi(Wins)
+
+		}
+
+		lossCount, err := db.Query("select sum(case when myWin=\"false\" then 1 else 0 end) from fights where myRobot = ?", thisBot.Name)
+
+		thisBot.Losses = 0
+		if err != nil {
+			thisBot.Losses = 0
+		} else {
+			lossCount.Next()
+			err = lossCount.Scan(&Losses)
+			thisBot.Losses, err = strconv.Atoi(Losses)
+
+		}
+
+		totalWins += thisBot.Wins
+		totalLosses += thisBot.Losses
+
+		lossCount.Close()
+		winCount.Close()
+
+	}
+	err = rows.Err()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var winrate = math.Floor(float64(totalWins) / (float64(totalWins) + float64(totalLosses)) * 100)
+	answer = "Overall record is " + strconv.Itoa(totalWins) + " wins and " + strconv.Itoa(totalLosses) + " losses for a winrate of " + fmt.Sprintf("%2.f", winrate) + "%"
+
+	return answer
 }

@@ -5,4 +5,6 @@ type Event struct {
 	Name   string
 	Finish string
 	Date   string
+	Report string
+	Robot  string
 }
