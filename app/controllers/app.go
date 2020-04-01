@@ -53,6 +53,10 @@ func (c App) W() revel.Result {
 	return c.Render()
 }
 
+func (c App) Todo() revel.Result {
+	return c.Render()
+}
+
 func (c App) Level5() revel.Result {
 
 	db := new(model.Database)
