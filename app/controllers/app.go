@@ -56,6 +56,9 @@ func (c App) W() revel.Result {
 func (c App) Todo() revel.Result {
 	return c.Render()
 }
+func (c App) Services() revel.Result {
+	return c.Render()
+}
 
 func (c App) Level5() revel.Result {
 

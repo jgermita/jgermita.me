@@ -1,4 +1,4 @@
-{{set . "title" "todo"}}
+{{set . "title" "Shop Dashboard"}}
 
   <!DOCTYPE html>
   <html>
@@ -78,7 +78,8 @@
   </head>
   <body>
   
-      <span id="date_time" style="font-size:30px; font-weight: bold;"></span>
+      <span id="date" style="font-size:30px; font-weight: bold;"></span>
+      <span id="time" style="font-size:30px; font-weight: bold; float:right;"></span>
       <br>
   </div>
   <a class="weatherwidget-io" href="https://forecast7.com/en/34d72n118d25/93536/?unit=us" data-label_1="Lancaster" data-font="Roboto" data-icons="Climacons Animated" >Lancaster</a>
@@ -87,22 +88,34 @@
 </script>
   <div class="mySlides fade">
     <h2> Shop Tasks </h2>
-    <iframe class="airtable-embed" src="https://airtable.com/embed/shrO7RD1y2Sgbl8yL?backgroundColor=gray" frameborder="0" onmousewheel="" width="100%" height="533" style="background: transparent; border: 1px solid #ccc;"></iframe>
+    <iframe class="airtable-embed" src="https://airtable.com/embed/shrO7RD1y2Sgbl8yL?backgroundColor=gray" frameborder="0" onmousewheel="" width="100%" height="700" style="background: transparent; border: 1px solid #ccc;"></iframe>
   </div>
   
   <div class="mySlides fade">
     <h2> Purchasing </h2>
-    <iframe class="airtable-embed" src="https://airtable.com/embed/shrX5MUl4w5fign0Q?backgroundColor=gray" frameborder="0" onmousewheel="" width="100%" height="533" style="background: transparent; border: 1px solid #ccc;"></iframe>
+    <iframe class="airtable-embed" src="https://airtable.com/embed/shrd4qOjjMzg8FKwB?backgroundColor=gray" frameborder="0" onmousewheel="" width="100%" height="700" style="background: transparent; border: 1px solid #ccc;"></iframe>
   </div>
   
   <div class="mySlides fade">
     <h2> Projects </h2>
-    <iframe class="airtable-embed" src="https://airtable.com/embed/shrIQkdtOb94Gea2M?backgroundColor=gray" frameborder="0" onmousewheel="" width="100%" height="533" style="background: transparent; border: 1px solid #ccc;"></iframe>
+    <iframe class="airtable-embed" src="https://airtable.com/embed/shrIQkdtOb94Gea2M?backgroundColor=gray" frameborder="0" onmousewheel="" width="100%" height="700" style="background: transparent; border: 1px solid #ccc;"></iframe>
+  </div>
+
+  <div class="mySlides fade">
+    <h2> Status </h2>
+    <iframe class="airtable-embed" src="https://airtable.com/embed/shrnXA7ArMjH93Ayb?backgroundColor=gray" frameborder="0" onmousewheel="" width="100%" height="700" style="background: transparent; border: 1px solid #ccc;"></iframe>
+  </div>
+
+  <div class="mySlides fade">
+    <h2> Calendar </h2>
+    <iframe class="airtable-embed" src="https://airtable.com/embed/shre2KihKGPgIhAaS?backgroundColor=gray" frameborder="0" onmousewheel="" width="100%" height="700" style="background: transparent; border: 1px solid #ccc;"></iframe>
   </div>
   
   <br>
   
   <div style="text-align:center">
+    <span class="dot"></span> 
+    <span class="dot"></span> 
     <span class="dot"></span> 
     <span class="dot"></span> 
     <span class="dot"></span> 
@@ -112,8 +125,8 @@
   
   <script>
   var slideIndex = 0;
-  var refresh = 1800000;
-  var timeout = 30000;
+  var timeout = 75000;
+  var refresh = timeout * 3;
   showSlides();
   setTimeout(function(){ location.reload(); }, refresh);
   window.onload = date_time('date_time');
@@ -134,7 +147,7 @@
     dots[slideIndex-1].className += " active";
     
     
-    setTimeout(showSlides, timeout / 3); // Change image every 2 seconds
+    setTimeout(showSlides, timeout / 5); // Change image every 2 seconds
     
   }
 
@@ -178,8 +191,8 @@ function date_time(id)
         {
                 s = "0"+s;
         }
-        result = '' +h+':'+m+':'+s+' '+days[day]+' '+months[month]+' '+d+' '+year+'';
-        document.getElementById(id).innerHTML = result;
+        document.getElementById('date').innerHTML = days[day]+' '+months[month]+' '+d+' '+year+'';
+        document.getElementById('time').innerHTML = h+':'+m+':'+s+' ';
         setTimeout('date_time("'+id+'");','1000');
         return true;
 }
