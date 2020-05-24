@@ -19,6 +19,7 @@ GET     /w                                   App.w
 GET     /level5/:robot                          App.robot
 GET     /todo                          App.todo
 GET     /services                          App.services
+GET     /league                        App.league
 # GET     /countdown                          App.countdown
 # GET     /countdown5012                          App.countdown5012
 # GET     /blog/post                              App.post

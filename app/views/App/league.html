@@ -1,0 +1,115 @@
+{{set . "title" "league"}}
+{{template "header.html" .}}
+
+<body>
+      <div id="main">
+          <div class="header">
+              <h1>League Team Shuffler</h1>
+              
+          </div>
+  
+          <div class="content">
+            <form action="/league" method="get">
+            
+            <label for="p1">Player 1</label>
+            <select id="p1" name="p1">
+                {{template "players.html" .}}
+            </select><br>
+
+            <label for="p2">Player 2</label>
+            <select id="p2" name="p2">
+                {{template "players.html" .}}
+            </select><br>
+
+            <label for="p3">Player 3</label>
+            <select id="p3" name="p3">
+                {{template "players.html" .}}
+            </select><br>
+
+            <label for="p4">Player 4</label>
+            <select id="p4" name="p4">
+                {{template "players.html" .}}
+            </select><br>
+
+            <label for="p5">Player 5</label>
+            <select id="p5" name="p5">
+                {{template "players.html" .}}
+            </select><br>
+
+            <label for="p6">Player 6</label>
+            <select id="p6" name="p6">
+                {{template "players.html" .}}
+            </select><br>
+
+            <label for="p7">Player 7</label>
+            <select id="p7" name="p7">
+                {{template "players.html" .}}
+            </select><br>
+
+            <label for="p8">Player 8</label>
+            <select id="p8" name="p8">
+                {{template "players.html" .}}
+            </select><br>
+
+            <label for="p9">Player 9</label>
+            <select id="p9" name="p9">
+                {{template "players.html" .}}
+            </select><br>
+
+            <label for="p10">Player 10</label>
+            <select id="p10" name="p10">
+                {{template "players.html" .}}
+            </select><br>
+
+
+            
+            <input type="radio" id="allrand" name="allrand" value="allrand" required checked>
+            <label for="allrand">Shuffle without player rating</label>
+            <input type="radio" id="allrand" name="allrand" value="rated" disabled>
+            <label for="rated">Balance players based on rating</label><br>
+            
+            <input type="checkbox" id="showroles" name="showroles" value="showroles">
+            <label for="showroles">Show Roles</label> <br>
+
+            <input type="submit" id='sumbit' value="Shuffle">
+            </form>
+
+
+            <h2>Output</h2>
+
+            <FORM>
+                <INPUT TYPE="button" onClick="history.go(0)" VALUE="Reroll">
+                </FORM>
+            <table class="pure-table">
+                <tr bgcolor="#ffb5b5"> <td>Red</td>
+            {{range .red}}
+                
+                <td><center>{{.}}</center></td>
+            {{end}}
+        </tr>
+        
+        {{if eq .showRoles "showroles"}}
+        <tr><td></td><td><center><img width="32px" src="/public/img/league/top.png"></center></th></td>
+            <td><center><img width="32px"  src="/public/img/league/jng.png"></center></td>
+            <td><center><img width="32px"  src="/public/img/league/mid.png"></center></td>
+            <td><center><img width="32px"  src="/public/img/league/bot.png"></center></td>
+            <td><center><img width="32px"  src="/public/img/league/sup.png"></center></td>
+        </tr>
+        {{end}}
+        <tr bgcolor="#b5b5ff"> <td>Blue</td>
+            {{range .blue}}
+            <td><center>{{.}}</center></td>
+                    {{end}}
+                </tr>
+            
+          </div>
+      </div>
+  </div>
+  
+  
+  
+  
+  <script src="/public/js/ui.js"></script>
+  
+  </body>
+{{template "footer.html" .}}
