@@ -50,6 +50,9 @@ func (c App) Blog() revel.Result {
 func (c App) Dt() revel.Result {
 	return c.Render()
 }
+func (c App) Dtbrushed() revel.Result {
+	return c.Render()
+}
 
 func (c App) W() revel.Result {
 	return c.Render()

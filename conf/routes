@@ -15,6 +15,7 @@ GET     /first                                  App.first
 GET     /software                               App.software
 GET     /blog                                   App.blog
 GET     /dt                                   App.dt
+GET     /dt_brushed                                   App.dtbrushed
 GET     /w                                   App.w
 GET     /level5/:robot                          App.robot
 GET     /todo                          App.todo

@@ -9,11 +9,12 @@
   
       <div id="main">
           <div class="header">
-              <h1>Brushless Drivetrain Calculator</h1>
+              <h1>Drivetrain Calculator</h1>
               <h2>Calculator for Combat Robot Drivetrain Design</h2>
           </div>
   
           <div class="content">
+              <p>Note: this is a simplified calculator for brushed motors given motor RPM and wheel diameter only.</p>
 
             <h1>Calculator</h1>
             <h2>Inputs</h2>
@@ -21,13 +22,9 @@
             <input id="v" value="14.8"><br>
             <label for="d">Wheel Diameter (in)</label>
             <input id="d" value="2"><br>
-            <label for="kv">Motor kV</label>
-            <input id="kv" value="3100"><br>
-            <label for="rint">R<sub>int</sub> (ohms)</label>
-            <input id="rint" value="0.22"><br>
+            <label for="inrpm">Motor RPM</label>
+            <input id="inrpm" value="1000"><br>
             
-            <label for="ratio">Gearbox Ratio</label>
-            <input id="ratio" value="1"><br>
             <label for="extratio">External Gear Ratio</label>
             <input id="extratio" value="1"><br><br>
             <h2>Output</h2>
@@ -35,23 +32,17 @@
             <h3>Rotary Output</h3>
             <label for="rpm">Gearbox Free Speed (RPM)</label>
             <input id="rpm" readonly><br>
-            <label for="inlb">Gearbox Stall Torque (in-lb)</label>
-            <input id="inlb" readonly><br>
 
             <h3>Linear Output</h3>
             <label for="fps">Linear Free Speed (ft/sec)</label>
             <input id="fps" readonly><br>
             <label for="mph">Linear Free Speed (mph)</label>
             <input id="mph" readonly><br>
-            <label for="lb">Linear Stall Force per side (lb)</label>
-            <input id="lb" readonly><br>
-            <label for="lbnet">Linear Stall Force net (lb)</label>
-            <input id="lbnet" readonly><br>
             
 
 
             <hr>
-            
+            <!--
             <h1>Reference</h1>
             <h2 id="motors">Common Brushless Motor Specs</h2>
             Click "use" to apply motor specs to calculator.
@@ -107,6 +98,7 @@
                     <tr><td><button onclick="useGearbox('4')">Use</button></td><td><a href="https://www.servocity.com/2737-rpm-premium-planetary-gear-motor" target="_blank">2737RPM</a></td><td>4:1</td><td></td></tr>
                 </tbody>
             </table>
+            -->
           </div>
       </div>
   </div>
@@ -117,14 +109,11 @@
         function runcalc(){
             var v = document.getElementById('v');
             var d = document.getElementById('d');
-            var kV = document.getElementById('kv');
-            var ratio = document.getElementById('ratio');
+            var inrpm = document.getElementById('inrpm');
             var extratio = document.getElementById('extratio');
             
-            var rint = document.getElementById('rint');
-
-            var netratio = ratio.value * extratio.value
-            var gbFree = (v.value * kv.value) / netratio;
+            var netratio = extratio.value
+            var gbFree = (inrpm.value) / netratio;
 
             var circin = d.value * 3.14159;
             var circft = circin / 12.0;
@@ -137,19 +126,6 @@
             $("#rpm").val((gbFree).toFixed(3));
             $("#fps").val((freerps * circft).toFixed(3));
             $("#mph").val((freerph * circmi).toFixed(3));
-
-            var tnm = ((1352/kV.value) * (v.value / rint.value)) / (141.61 * 1.25);
-            var tinlb = tnm / 8.8507457673787;
-
-            var gbStall = tinlb * netratio;
-
-            var linStall = (tinlb / (d.value / 2)) * netratio;
-
-            $("#inlb").val((gbStall).toFixed(3));
-            $("#lb").val((linStall).toFixed(3));
-            $("#lbnet").val((linStall).toFixed(3)*2);
-
-
 
         }
 
