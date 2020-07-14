@@ -130,8 +130,9 @@ func (c App) Level5() revel.Result {
 	var bots = db.GetAllRobots()
 	var events = db.GetAllEvents()
 	var record = db.GetRecord()
+	var videos = db.GetHighlights()
 
-	return c.Render(bots, events, record)
+	return c.Render(bots, events, record, videos)
 }
 func (c App) Robot() revel.Result {
 

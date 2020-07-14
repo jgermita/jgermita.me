@@ -27,7 +27,7 @@ func (database *Database) OpenDatabase(filename string) {
 	//
 	//
 
-	var localtest = true
+	var localtest = false
 
 	if localtest {
 		fileName = "./app.db"
@@ -148,6 +148,45 @@ func (database *Database) GetAllEvents() []Event {
 		thisEvent.Robot = eRobot
 		thisEvent.Date = eDate
 		thisEvent.Report = eReport
+		thisEvent.Video = eVideo
+
+		thisEvent.VideoExists = eVideo != ""
+
+		allEvents = append(allEvents, thisEvent)
+
+	}
+	err = rows.Err()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return allEvents
+}
+
+func (database *Database) GetHighlights() []Event {
+	db, err := sql.Open("sqlite3",
+		fileName)
+	if err != nil {
+		log.Fatal(err)
+	}
+	var allEvents []Event
+
+	// Get robot data
+	rows, err := db.Query("select distinct video from events where video IS NOT '' order by date DESC, robot ASC")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+	for rows.Next() {
+		// var thisEvent string
+		var thisEvent Event
+
+		var eVideo string
+
+		err := rows.Scan(&eVideo)
+		if err != nil {
+			log.Fatal(err)
+		}
 		thisEvent.Video = eVideo
 
 		thisEvent.VideoExists = eVideo != ""
