@@ -7,4 +7,5 @@ type Event struct {
 	Date   string
 	Report string
 	Robot  string
+	Video  string
 }

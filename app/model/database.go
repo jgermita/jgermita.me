@@ -218,7 +218,7 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 
 		}
 
-		allEvents, err := db.Query("select name, finish, date, report from events where robot = ?", thisBot.Name)
+		allEvents, err := db.Query("select name, finish, date, report, video from events where robot = ?", thisBot.Name)
 		defer allEvents.Close()
 
 		for allEvents.Next() {
@@ -229,8 +229,9 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 			var eFinish string
 			var eDate string
 			var eReport string
+			var eVideo string
 
-			err := allEvents.Scan(&eName, &eFinish, &eDate, &eReport)
+			err := allEvents.Scan(&eName, &eFinish, &eDate, &eReport, &eVideo)
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -238,6 +239,7 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 			thisEvent.Finish = eFinish
 			thisEvent.Date = eDate
 			thisEvent.Report = eReport
+			thisEvent.Video = eVideo
 			thisBot.Events = append(thisBot.Events, thisEvent)
 
 		}

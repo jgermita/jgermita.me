@@ -69,6 +69,8 @@
             <table class="pure-table">
                 <thead>
                     <tr>
+                        <th>
+                          <img class="pure-img-responsive" src="/public/img/video.png"></th>
                         <th>Event</th>
                         <th>Robot</th>
                         <th>Finish</th>
@@ -79,6 +81,17 @@
                 <tbody>
                     {{range .events}}
                     <tr>
+                        <td>
+                          {{if eq .Video ""}}
+                          {{else}}
+                          
+                          <a href="https://www.youtube.com/watch?v={{.Video}}" target="_blank">
+                            <img class="pure-img-responsive" src="/public/img/video.png">
+                          </a>
+            
+                          {{end}}
+            
+                        </td>
                         <td>{{.Name}}</td>
                         <td><a href="/level5/{{.Robot}}">{{.Robot}}</a></td>
                         <td>{{if eq .Finish "1st"}} 
