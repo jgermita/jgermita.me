@@ -68,14 +68,13 @@
 			slides = $('.slide'),
 			numOfSlides = slides.length;
 
-      var advance = setInterval(nextSlide, 5000);
+      
 		function nextSlide() {
 			// `[]` returns a vanilla DOM object from a jQuery object/collection
 			slides[pos].video.stopVideo()
 			slides.eq(pos).animate({ left: '-100%' }, 500);
 			pos = (pos >= numOfSlides - 1 ? 0 : ++pos);
 			slides.eq(pos).css({ left: '100%' }).animate({ left: 0 }, 500);
-      window.clearInterval(advance)
 		}
 
 		function previousSlide() {
@@ -83,13 +82,13 @@
 			slides.eq(pos).animate({ left: '100%' }, 500);
 			pos = (pos == 0 ? numOfSlides - 1 : --pos);
 			slides.eq(pos).css({ left: '-100%' }).animate({ left: 0 }, 500);
-      window.clearInterval(advance)
 		}
 
 		$('.left').click(previousSlide);
 		$('.right').click(nextSlide);
 	})
 
+    $('.slide').click(window.clearInterval(advance))
 	function onYouTubeIframeAPIReady() {
 		$('.slide').each(function (index, slide) {
 			// Get the `.video` element inside each `.slide`
@@ -120,7 +119,7 @@
               {{range .videos}}
                           {{if .VideoExists}}
                           
-                          <div class="slide">
+                          <div class="slide" id="slide">
                             <!--<iframe width="560" height="315" src="https://www.youtube.com/embed/{{.}}" frameborder="0"
                             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>-->
                             <iframe class="video" src="https://www.youtube.com/embed/{{.Video}}?ecver=2&enablejsapi=1"></iframe>

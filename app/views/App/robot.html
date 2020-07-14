@@ -68,14 +68,13 @@
 			slides = $('.slide'),
 			numOfSlides = slides.length;
 
-      var advance = setInterval(nextSlide, 5000);
 		function nextSlide() {
 			// `[]` returns a vanilla DOM object from a jQuery object/collection
 			slides[pos].video.stopVideo()
 			slides.eq(pos).animate({ left: '-100%' }, 500);
 			pos = (pos >= numOfSlides - 1 ? 0 : ++pos);
 			slides.eq(pos).css({ left: '100%' }).animate({ left: 0 }, 500);
-      window.clearInterval(advance)
+      
 		}
 
 		function previousSlide() {
@@ -83,7 +82,6 @@
 			slides.eq(pos).animate({ left: '100%' }, 500);
 			pos = (pos == 0 ? numOfSlides - 1 : --pos);
 			slides.eq(pos).css({ left: '-100%' }).animate({ left: 0 }, 500);
-      window.clearInterval(advance)
 		}
 
 		$('.left').click(previousSlide);
