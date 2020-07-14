@@ -50,13 +50,13 @@
                         <td>{{.Weapon}}</td>
                         <td>
                             {{if eq .Status "In Service"}}
-                            <span style="border-radius: 10%;color: white; padding: 4px; background: green;">
+                            <span style="border-radius: 5%;color: white; padding: 4px; background: green;">
                                 {{else if eq .Status "In Progress"}}
-                                <span style="border-radius: 10%;color: black; padding: 4px; background: #BEBEBE;">
+                                <span style="border-radius: 5%;color: black; padding: 4px; background: #BEBEBE;">
                                     {{else if eq .Status "Retired"}}
-                                    <span style="border-radius: 10%;color: white; padding: 4px; background: #606060;">
+                                    <span style="border-radius: 5%;color: white; padding: 4px; background: #606060;">
                                         {{else}}
-                                        <span style="border-radius: 10%;color: black; padding: 4px;">
+                                        <span style="border-radius: 5%;color: black; padding: 4px;">
                                             {{end}}
                                             {{.Status}}</span>
                         </td>
@@ -73,7 +73,7 @@
                           <img class="pure-img-responsive" src="/public/img/video.png"></th>
                         <th>Event</th>
                         <th>Robot</th>
-                        <th>Finish</th>
+                        <th></th>
                         <th>Date</th>
                     </tr>
                 </thead>
@@ -82,32 +82,32 @@
                     {{range .events}}
                     <tr>
                         <td>
-                          {{if eq .Video ""}}
-                          {{else}}
+                          {{if .VideoExists}}
                           
                           <a href="https://www.youtube.com/watch?v={{.Video}}" target="_blank">
                             <img class="pure-img-responsive" src="/public/img/video.png">
                           </a>
+                          {{else}}
             
                           {{end}}
             
                         </td>
                         <td>{{.Name}}</td>
                         <td><a href="/level5/{{.Robot}}">{{.Robot}}</a></td>
-                        <td>{{if eq .Finish "1st"}} 
-                            <span style="border-radius: 25%;color: black; padding: 4px; background: #FFD739;">
+                        <td><center>{{if eq .Finish "1st"}} 
+                            <span style="border-radius: 5%;color: black; padding: 4px; background: #FFD739;">
                             {{else if eq .Finish "2nd"}}
-                            <span style="border-radius: 25%;color: black; padding: 4px; background: #BEBEBE;">
+                            <span style="border-radius: 5%;color: black; padding: 4px; background: #BEBEBE;">
                             {{else if eq .Finish "3rd"}}
-                            <span style="border-radius: 25%;color: white; padding: 4px; background: #BB8644;">
+                            <span style="border-radius: 5%;color: white; padding: 4px; background: #BB8644;">
                             {{else if eq .Finish "NR"}}
-                            <span style="border-radius: 25%;color: white; padding: 4px; background: #606060;">
+                            <span style="border-radius: 5%;color: white; padding: 4px; background: #606060;">
                             {{else if eq .Finish ""}}
                             <span >
                             {{else}}
-                            <span style="border-radius: 25%;color: white; padding: 4px; background: #0094B2;">
+                            <span style="border-radius: 5%;color: white; padding: 4px; background: #0094B2;">
                             {{end}}
-                            {{.Finish}}</span></td>
+                            {{.Finish}}</span></center></td>
                         <td>{{.Date}}</td>
                     </tr>
                     {{end}}

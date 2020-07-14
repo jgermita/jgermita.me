@@ -33,19 +33,18 @@
             <h2>Output</h2>
 
             <h3>Rotary Output</h3>
-            <label for="rpm">Gearbox Free Speed (RPM)</label>
+            <label for="rpm">Gearbox Free Speed</label>
             <input id="rpm" readonly><br>
-            <label for="inlb">Gearbox Stall Torque (in-lb)</label>
+            <label for="inlb">Gearbox Stall Torque</label>
             <input id="inlb" readonly><br>
 
             <h3>Linear Output</h3>
-            <label for="fps">Linear Free Speed (ft/sec)</label>
-            <input id="fps" readonly><br>
-            <label for="mph">Linear Free Speed (mph)</label>
+            <label for="fps">Linear Free Speed</label>
+            <input id="fps" readonly>
             <input id="mph" readonly><br>
-            <label for="lb">Linear Stall Force per side (lb)</label>
+            <label for="lb">Linear Stall Force per side</label>
             <input id="lb" readonly><br>
-            <label for="lbnet">Linear Stall Force net (lb)</label>
+            <label for="lbnet">Linear Stall Force net</label>
             <input id="lbnet" readonly><br>
             
 
@@ -133,10 +132,9 @@
             var freerps = gbFree / 60.0;
             var freerph = gbFree * 60;
 
-
-            $("#rpm").val((gbFree).toFixed(3));
-            $("#fps").val((freerps * circft).toFixed(3));
-            $("#mph").val((freerph * circmi).toFixed(3));
+            $("#rpm").val((gbFree).toFixed(1).concat(" rpm") );
+            $("#fps").val((freerps * circft).toFixed(1).concat(" ft/sec") );
+            $("#mph").val((freerph * circmi).toFixed(1).concat(" mph") );
 
             var tnm = ((1352/kV.value) * (v.value / rint.value)) / (141.61 * 1.25);
             var tinlb = tnm / 8.8507457673787;
@@ -144,10 +142,11 @@
             var gbStall = tinlb * netratio;
 
             var linStall = (tinlb / (d.value / 2)) * netratio;
+            var linStallNet = linStall * 2;
 
-            $("#inlb").val((gbStall).toFixed(3));
-            $("#lb").val((linStall).toFixed(3));
-            $("#lbnet").val((linStall).toFixed(3)*2);
+            $("#inlb").val((gbStall).toFixed(1).concat(" in-lb"));
+            $("#lb").val((linStall).toFixed(1).concat(" lb"));
+            $("#lbnet").val(((linStallNet).toFixed(1)).concat(" lb"));
 
 
 

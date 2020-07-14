@@ -1,22 +1,174 @@
-{{set . "title" "Contact Me"}}
+{{set . "title" "Weapon Tip Speed Calculator"}}
 {{template "header.html" .}}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
 <body>
 
   
       <div id="main">
           <div class="header">
-              <h1>Robot Calculators</h1>
-              <h2>Calculators for Robot Design</h2>
+              <h1>Weapon Tip Speed Calculator</h1>
+              <h2>Calculator for Combat Robot Weapon Design</h2>
           </div>
   
           <div class="content">
-              <h2>Drivetrain</h2>
-              <h2>Weapon</h2>
+
+            <h1>Calculator</h1>
+            <h2>Inputs</h2>
+            <label for="v">Battery Voltage (v)</label>
+            <input id="v" value="14.8"><br>
+            <label for="d">Weapon Diameter (in)</label>
+            <input id="d" value="4.7"><br>
+            <label for="kv">Motor kV</label>
+            <input id="kv" value="2600"><br>
+            
+            <label for="ratio">Reduction</label>
+            <input id="ratio" value="4"><br>
+            <h2>Output</h2>
+
+            <label for="rpm">Weapon Free Speed</label>
+            <input id="rpm" readonly><br>
+            <label for="fps">Tip Speed</label>
+            <input id="fps" readonly>
+            <input id="mph" readonly><br>
+            
+
+
+            <hr>
+            <!--
+            <h1>Reference</h1>
+            <h2 id="motors">Common Brushless Motor Specs</h2>
+            Click "use" to apply motor specs to calculator.
+            <table class="pure-table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Motor</th>
+                            <th>kv</th>
+                            <th>R<sub>int</sub></th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+    
+                    <tbody>
+                       <tr>
+                           <td><button onclick="useMotor(3100, 0.22)">Use</button></td><td><a href="https://hobbyking.com/en_us/turnigy-aerodrive-sk3-2118-3100kv-brushless-outrunner-motor.html" target="_blank">SK3 2118</a></td><td>3100</td><td>0.22</td><td>2mm shaft</td>
+                       </tr>
+                       <tr>
+                        <td><button onclick="useMotor(2300, 0.19)">Use</button></td><td><a href="https://hobbyking.com/en_us/turnigy-aerodrive-sk3-2118-3100kv-brushless-outrunner-motor.html" target="_blank">BE1806 Race Edition</a></td><td>2300</td><td>0.19</td><td>Purple, 2mm/3mm stepped shaft</td>
+                        </tr>
+                    </tbody>
+                </table>
+            <h2 id="gearboxes">ServoCity 22mm Gearmotor Ratios</h2>
+            Click "use" to apply gearbox specs to calculator. <br>
+            Green ighlighted rows indicate gearboxes that are confirmed compatible with <a href="https://www.botkits.com/collections/all-products/products/pinion-gears-for-rp-gm-22-12v780" target="_blank">Botkits' 13t pinion gears</a>. <br>
+            Red highlighted rows indicate a different sized pinion requiring a transplant from the stock motor. Unhighlighted rows are unconfirmed. 
+            <table class="pure-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>RPM</th>
+                        <th>Ratio</th>
+                        <th>Pinion</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr><td><button onclick="useGearbox('455')">Use</button></td><td><a href="https://www.servocity.com/26-rpm-premium-planetary-gear-motor" target="_blank">26RPM</a></td><td>455:1</td><td></td></tr>
+                    <tr><td><button onclick="useGearbox('370')">Use</button></td><td><a href="https://www.servocity.com/32-rpm-premium-planetary-gear-motor" target="_blank">32RPM</a></td><td>370:1</td><td></td></tr>
+                    <tr><td><button onclick="useGearbox('316')">Use</button></td><td><a href="https://www.servocity.com/38-rpm-premium-planetary-gear-motor" target="_blank">38RPM</a></td><td>316:1</td><td></td></tr>
+                    <tr><td><button onclick="useGearbox('270')">Use</button></td><td><a href="https://www.servocity.com/44-rpm-premium-planetary-gear-motor" target="_blank">44RPM</a></td><td>270:1</td><td></td></tr>
+                    <tr><td><button onclick="useGearbox('231')">Use</button></td><td><a href="https://www.servocity.com/52-rpm-premium-planetary-gear-motor" target="_blank">52RPM</a></td><td>231:1</td><td></td></tr>
+                    <tr><td><button onclick="useGearbox('104')">Use</button></td><td><a href="https://www.servocity.com/116-rpm-premium-planetary-gear-motor" target="_blank">116RPM</a></td><td>104:1</td><td></td></tr>
+                    <tr><td><button onclick="useGearbox('84')">Use</button></td><td><a href="https://www.servocity.com/142-rpm-premium-planetary-gear-motor" target="_blank">142RPM</a></td><td>84:1</td><td></td></tr>
+                    <tr bgcolor="#99ff33"><td><button onclick="useGearbox('62')">Use</button></td><td><a href="https://www.servocity.com/195-rpm-premium-planetary-gear-motor" target="_blank">195RPM</a></td><td>62:1</td><td>13t</td></tr>
+                    <tr bgcolor="#99ff33"><td><button onclick="useGearbox('43')">Use</button></td><td><a href="https://www.servocity.com/280-rpm-premium-planetary-gear-motor" target="_blank">280RPM</a></td><td>43:1</td><td>13t</td></tr>
+                    <tr bgcolor="#99ff33"><td><button onclick="useGearbox('43')">Use</button></td><td><a href="https://www.servocity.com/350-rpm-premium-planetary-gear-motor" target="_blank">350RPM</a></td><td>43:1</td><td>13t</td></tr>
+                    <tr bgcolor="#99ff33"><td><button onclick="useGearbox('19')">Use</button></td><td><a href="https://www.servocity.com/416-rpm-premium-planetary-gear-motor" target="_blank">416RPM</a></td><td>19:1</td><td>13t</td></tr>
+                    <tr bgcolor="#99ff33"><td><button onclick="useGearbox('19')">Use</button></td><td><a href="https://www.servocity.com/520-rpm-premium-planetary-gear-motor" target="_blank">520RPM</a></td><td>19:1</td><td>13t</td></tr>
+                    <tr bgcolor="#99ff33"><td><button onclick="useGearbox('19')">Use</button></td><td><a href="https://www.servocity.com/624-rpm-premium-planetary-gear-motors" target="_blank">624RPM</a></td><td>19:1</td><td>13t</td></tr>
+                    <tr bgcolor="#99ff33"><td><button onclick="useGearbox('19')">Use</button></td><td><a href="https://www.servocity.com/730-rpm-premium-planetary-gear-motor" target="_blank">730RPM</a></td><td>19:1</td><td>13t</td></tr>
+                    <tr><td><button onclick="useGearbox('4')">Use</button></td><td><a href="https://www.servocity.com/2737-rpm-premium-planetary-gear-motor" target="_blank">2737RPM</a></td><td>4:1</td><td></td></tr>
+                </tbody>
+            </table>
+        -->
           </div>
       </div>
   </div>
   
-  
+  <script>
+
+      
+        function runcalc(){
+            var v = document.getElementById('v');
+            var d = document.getElementById('d');
+            var kV = document.getElementById('kv');
+            var ratio = document.getElementById('ratio');
+            var extratio = 1
+            
+            var rint = document.getElementById('rint');
+
+            var netratio = ratio.value
+            var gbFree = (v.value * kv.value) / netratio;
+
+            var circin = d.value * 3.14159;
+            var circft = circin / 12.0;
+            var circmi = circft / 5280.0;
+
+            var freerps = gbFree / 60.0;
+            var freerph = gbFree * 60;
+
+
+            $("#rpm").val((gbFree).toFixed(1).concat(" rpm") );
+            $("#fps").val((freerps * circft).toFixed(1).concat(" ft/sec") );
+            $("#mph").val((freerph * circmi).toFixed(1).concat(" mph") );
+
+
+
+
+
+        }
+
+        function useMotor(kv, rint) {
+            document.getElementById("kv").setAttribute("value", kv);
+            document.getElementById("rint").setAttribute("value", rint);
+            runcalc();
+
+        }
+
+        function useGearbox(ratio) {
+            document.getElementById("ratio").setAttribute("value", ratio);
+            runcalc();
+        }
+
+
+        $(document).keypress(function(e){
+             if(e.which === 13){
+                 runcalc();
+             }
+         });
+         $(function() {
+        $( document ).tooltip({
+        position: {
+            my: "left top",
+            at: "right-25% bottom+5px"
+        }
+                
+        });
+        });
+        
+        $(document).on("change", "input",function(){
+            runcalc();
+        });
+       
+        $(document).on('change', "select", function() {
+            runcalc();
+        });
+        
+
+    </script>
   
   
   <script src="/public/js/ui.js"></script>

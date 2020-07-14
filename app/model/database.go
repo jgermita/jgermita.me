@@ -24,15 +24,22 @@ type Database struct {
 
 // Open the database connection
 func (database *Database) OpenDatabase(filename string) {
-	//	fileName = "./" + filename
-	//fileName = "https://github.com/jgermita/jgermita.me/raw/master/app.db"
+	//
+	//
 
-	fileUrl := "https://github.com/jgermita/jgermita.me/raw/master/app.db"
+	var localtest = true
 
-	if err := DownloadFile("app_remote.db", fileUrl); err != nil {
-		panic(err)
+	if localtest {
+		fileName = "./app.db"
+	} else {
+
+		fileUrl := "https://github.com/jgermita/jgermita.me/raw/master/app.db"
+
+		if err := DownloadFile("app_remote.db", fileUrl); err != nil {
+			panic(err)
+		}
+		fileName = "./app_remote.db"
 	}
-	fileName = "./app_remote.db"
 
 }
 
@@ -115,33 +122,38 @@ func (database *Database) GetAllEvents() []Event {
 	}
 	var allEvents []Event
 
-	var (
-		Name   string
-		Bot    string
-		Finish string
-		Date   string
-	)
-
 	// Get robot data
-	rows, err := db.Query("select name, robot, finish, date from events order by date DESC, robot ASC")
+	rows, err := db.Query("select name, robot, finish, date, report, video from events order by date DESC, robot ASC")
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer rows.Close()
 	for rows.Next() {
+		// var thisEvent string
+		var thisEvent Event
 
-		err := rows.Scan(&Name, &Bot, &Finish, &Date)
+		var eName string
+		var eRobot string
+		var eFinish string
+		var eDate string
+		var eReport string
+		var eVideo string
+
+		err := rows.Scan(&eName, &eRobot, &eFinish, &eDate, &eReport, &eVideo)
 		if err != nil {
 			log.Fatal(err)
 		}
+		thisEvent.Name = eName
+		thisEvent.Finish = eFinish
+		thisEvent.Robot = eRobot
+		thisEvent.Date = eDate
+		thisEvent.Report = eReport
+		thisEvent.Video = eVideo
 
-		var thisEvent Event
-		thisEvent.Name = Name
-		thisEvent.Robot = Bot
-		thisEvent.Finish = Finish
-		thisEvent.Date = Date
+		thisEvent.VideoExists = eVideo != ""
 
 		allEvents = append(allEvents, thisEvent)
+
 	}
 	err = rows.Err()
 	if err != nil {
@@ -220,7 +232,6 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 
 		allEvents, err := db.Query("select name, finish, date, report, video from events where robot = ?", thisBot.Name)
 		defer allEvents.Close()
-
 		for allEvents.Next() {
 			// var thisEvent string
 			var thisEvent Event
@@ -240,6 +251,9 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 			thisEvent.Date = eDate
 			thisEvent.Report = eReport
 			thisEvent.Video = eVideo
+
+			thisEvent.VideoExists = eVideo != ""
+
 			thisBot.Events = append(thisBot.Events, thisEvent)
 
 		}

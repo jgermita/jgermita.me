@@ -30,13 +30,12 @@
             <h2>Output</h2>
 
             <h3>Rotary Output</h3>
-            <label for="rpm">Gearbox Free Speed (RPM)</label>
+            <label for="rpm">Gearbox Free Speed</label>
             <input id="rpm" readonly><br>
 
             <h3>Linear Output</h3>
-            <label for="fps">Linear Free Speed (ft/sec)</label>
-            <input id="fps" readonly><br>
-            <label for="mph">Linear Free Speed (mph)</label>
+            <label for="fps">Linear Free Speed</label>
+            <input id="fps" readonly>
             <input id="mph" readonly><br>
             
 
@@ -123,9 +122,9 @@
             var freerph = gbFree * 60;
 
 
-            $("#rpm").val((gbFree).toFixed(3));
-            $("#fps").val((freerps * circft).toFixed(3));
-            $("#mph").val((freerph * circmi).toFixed(3));
+            $("#rpm").val((gbFree).toFixed(1).concat(" rpm") );
+            $("#fps").val((freerps * circft).toFixed(1).concat(" ft/sec") );
+            $("#mph").val((freerph * circmi).toFixed(1).concat(" mph") );
 
         }
 
