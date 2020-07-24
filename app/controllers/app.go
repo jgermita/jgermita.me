@@ -143,3 +143,13 @@ func (c App) Robot() revel.Result {
 	var bot = db.GetRobot(robot)
 	return c.Render(bot)
 }
+
+func (c App) Fight() revel.Result {
+
+	id := strings.ToLower(c.Params.Route.Get("id"))
+
+	db := new(model.Database)
+
+	var fight = db.GetFight(id)
+	return c.Render(fight)
+}

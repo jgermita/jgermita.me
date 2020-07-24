@@ -1,0 +1,91 @@
+<!--<title>{{.fight.Event}} {{.fight.MyRobot}} vs {{.fight.OpponentRobot}}</title>-->
+{{set . "title" "Fight"}}
+{{template "header.html" .}}
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://www.youtube.com/iframe_api"></script>
+
+  
+<body>
+
+
+  <div id="main">
+    <div class="header">
+      <h1>{{.fight.Event}}</h1>
+      <h2>{{.fight.MyRobot}} vs {{.fight.OpponentRobot}}</h2>
+    </div>
+
+    <div class="content">
+
+      {{if eq .fight.VideoExists true}}
+      
+      <h2>Video</h2>
+      <center>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/{{.fight.Video}}" frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        
+      </center>
+      {{end}}
+
+      <!--<p>{{.bot.Desc}}</p>-->
+      <div class="pure-g">
+
+
+
+        <div class="pure-u-11-24">
+
+          <h2>Results</h2>
+          <table class="pure-table pure-table-horizontal">
+
+            <tbody>
+
+              <tr>
+                <th>My Robot</th>
+                <td>{{.fight.MyRobot}}</td>
+              </tr>
+
+              <tr>
+                <th>Opponent</th>
+                <td>{{.fight.OpponentRobot}}</td>
+              </tr>
+              <tr>
+                <th>Winner</th>
+                
+                <td>
+                  {{if eq .fight.MyWin true}} 
+                  {{.fight.MyRobot}}
+                  {{else}}
+                  {{.fight.OpponentRobot}}
+                  {{end}}
+                </td>
+              </tr>
+              
+            </tbody>
+          </table>
+          <br>
+
+        </div>
+        <div class="pure-u-1-12"></div>
+        <div class="pure-u-11-24">
+
+
+          <h2>Fight Recap</h2>
+          <p>{{.fight.Recap}}</p>
+          <br>
+        </div>
+      </div>
+
+        <div class="slide-arrow left"></div>
+        <div class="slide-arrow right"></div>
+    </div>
+    </div>
+  </div>
+  </div>
+
+
+
+
+  <script src="/public/js/ui.js"></script>
+
+</body>
+{{template "footer.html" .}}

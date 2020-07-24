@@ -27,7 +27,7 @@ func (database *Database) OpenDatabase(filename string) {
 	//
 	//
 
-	var localtest = false
+	var localtest = true
 
 	if localtest {
 		fileName = "./app.db"
@@ -91,7 +91,7 @@ func (database *Database) GetAllRobots() []Robot {
 	)
 
 	// Get robot data
-	rows, err := db.Query("select * from robots order by status, id")
+	rows, err := db.Query("select * from robots order by status asc, weight desc")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -334,15 +334,16 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 		OpponentRobot string
 		MyWin         bool
 		Video         string
+		Recap         string
 	)
 	for rows.Next() {
-		err := rows.Scan(&FightId, &Event, &MyRobot, &OpponentRobot, &MyWin, &Video)
+		err := rows.Scan(&FightId, &Event, &MyRobot, &OpponentRobot, &MyWin, &Video, &Recap)
 		if err != nil {
 			log.Fatal(err)
 		}
 		thisFight := new(Fight)
 
-		thisFight.id = FightId
+		thisFight.Id = FightId
 		thisFight.Event = Event
 		thisFight.MyRobot = MyRobot
 		thisFight.OpponentRobot = OpponentRobot
@@ -360,6 +361,57 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 	}
 
 	return thisBot
+}
+
+func (database *Database) GetFight(id string) Fight {
+	db, err := sql.Open("sqlite3",
+		fileName)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Get robot data
+	rows, err := db.Query("select * from fights where id = ?", id)
+
+	var thisFight Fight
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+
+	var (
+		FightId       int
+		Event         string
+		MyRobot       string
+		OpponentRobot string
+		MyWin         bool
+		Video         string
+		Recap         string
+	)
+	for rows.Next() {
+		err := rows.Scan(&FightId, &Event, &MyRobot, &OpponentRobot, &MyWin, &Video, &Recap)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		thisFight.Id = FightId
+		thisFight.Event = Event
+		thisFight.MyRobot = MyRobot
+		thisFight.OpponentRobot = OpponentRobot
+		thisFight.MyWin = MyWin
+		thisFight.Video = Video
+		thisFight.Recap = Recap
+		println(Video)
+
+		thisFight.VideoExists = Video != ""
+
+	}
+	err = rows.Err()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return thisFight
 }
 
 func (database *Database) GetRecord() string {

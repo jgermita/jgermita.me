@@ -18,6 +18,7 @@ GET     /dt                                   App.dt
 GET     /dt_brushed                                   App.dtbrushed
 GET     /w                                   App.w
 GET     /level5/:robot                          App.robot
+GET     /level5/fights/:id                          App.fight
 GET     /todo                          App.todo
 GET     /services                          App.services
 GET     /league                        App.league

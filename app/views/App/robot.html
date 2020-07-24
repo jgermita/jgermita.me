@@ -96,7 +96,18 @@
 			slide.video = new YT.Player(iframe)
 		})
 	}
-	</script>
+  </script>
+  
+  <script>
+    function showVideo(id) {
+      var x = document.getElementById(id);
+      if (x.style.display === "none") {
+        x.style.display = "block";
+      } else {
+        x.style.display = "none";
+      }
+    }
+  </script>
 <body>
 
 
@@ -174,8 +185,7 @@
           <tr>
             <th>Date</th>
             <th>Event</th>
-            <th>Finish</th>
-            <th>Report</th>
+            <th> </th>
           </tr>
         </thead>
 
@@ -183,7 +193,14 @@
           {{range .bot.Events}}
           <tr>
             <td>{{.Date}}</td>
-            <td>{{.Name}}</td>
+            <td>
+              {{if eq .Report ""}} 
+              
+              {{else}}
+              <a href="{{.Report}}" target="_blank">{{.Name}}</a>
+              {{end}}
+              
+            </td>
             <td>
               
                 {{if eq .Finish "1st"}} 
@@ -200,14 +217,6 @@
                 <span style="border-radius: 25%;color: white; padding: 4px; background: #0094B2;">
                 {{end}}
                 {{.Finish}}</span>
-            </td>
-            <td>
-              
-              {{if eq .Report ""}} 
-              
-              {{else}}
-              <a href="{{.Report}}" target="_blank">Report</a>
-              {{end}}
             </td>
 
           </tr>
@@ -233,9 +242,14 @@
           <tr>
             <td>
               {{if .VideoExists}}
-              <a href="https://www.youtube.com/watch?v={{.Video}}" target="_blank">
+              <a href="/level5/fights/{{.Id}}">
+              <!--<a href="https://www.youtube.com/watch?v={{.Video}}" target="_blank">-->
                 <img class="pure-img-responsive" src="/public/img/video.png">
               </a>
+              
+              <!--
+              <input type="image" onclick="showVideo({{.Video}})" src="/public/img/video.png"/>-->
+              
               {{else}}
 
               {{end}}
@@ -244,7 +258,9 @@
 
 
             <td>{{.Event}}</td>
-            <td>{{.OpponentRobot}}</td>
+            <td><a href="/level5/fights/{{.Id}}">
+              {{.OpponentRobot}}
+              </a></td>
             <td>
               {{if .MyWin}}
               ✅
@@ -254,6 +270,13 @@
 
             </td>
           </tr>
+          <div >
+            <tr id="{{.Video}}" style="display:none">
+            <td></td><td>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{.Video}}" frameborder="0"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </td><td></td></tr>
+          </div>
           {{end}}
         </tbody>
       </table>

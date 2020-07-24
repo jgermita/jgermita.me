@@ -1,11 +1,12 @@
 package model
 
 type Fight struct {
-	id            int
+	Id            int
 	Event         string
 	MyRobot       string
 	OpponentRobot string
 	MyWin         bool
 	Video         string
 	VideoExists   bool
+	Recap         string
 }
