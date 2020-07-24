@@ -269,7 +269,7 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 
 		}
 
-		allEvents, err := db.Query("select name, finish, date, report, video from events where robot = ?", thisBot.Name)
+		allEvents, err := db.Query("select name, finish, date, report, video from events where robot = ? ORDER BY id DESC", thisBot.Name)
 		defer allEvents.Close()
 		for allEvents.Next() {
 			// var thisEvent string
@@ -290,8 +290,55 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 			thisEvent.Date = eDate
 			thisEvent.Report = eReport
 			thisEvent.Video = eVideo
+			thisEvent.Robot = thisBot.Name
 
 			thisEvent.VideoExists = eVideo != ""
+
+			var loss = 0
+			var win = 0
+			println(thisBot.Name, thisEvent.Name)
+			stmt, err := db.Prepare("select * from fights where myRobot = ? AND event = ?")
+			eFights, err := stmt.Query(thisBot.Name, thisEvent.Name)
+			for eFights.Next() {
+
+				var (
+					FightId       int
+					Event         string
+					MyRobot       string
+					OpponentRobot string
+					MyWin         bool
+					Video         string
+					Recap         string
+				)
+				err := eFights.Scan(&FightId, &Event, &MyRobot, &OpponentRobot, &MyWin, &Video, &Recap)
+				if err != nil {
+					log.Fatal(err)
+				}
+
+				var eFight Fight
+
+				eFight.Id = FightId
+				eFight.Event = Event
+				eFight.MyRobot = MyRobot
+				eFight.OpponentRobot = OpponentRobot
+				eFight.MyWin = MyWin
+				eFight.Video = Video
+				eFight.Recap = Recap
+
+				eFight.VideoExists = Video != ""
+
+				if MyWin {
+					win++
+				} else {
+					loss++
+				}
+
+				thisEvent.Fights = append(thisEvent.Fights, eFight)
+			}
+			thisEvent.WinCount = win
+			thisEvent.LossCount = loss
+			win = 0
+			loss = 0
 
 			thisBot.Events = append(thisBot.Events, thisEvent)
 

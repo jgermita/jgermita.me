@@ -39,10 +39,10 @@ This is the parent `<div>` that contains the menu and the content area.
 /*
 The content `<div>` is where all your content goes.
 */
-.content {
+.content, .main {
     margin: 0 auto;
     padding: 0 2em;
-    max-width: 800px;
+    max-width: 1200px;
     margin-bottom: 50px;
     line-height: 1.6em;
 }

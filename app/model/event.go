@@ -9,4 +9,8 @@ type Event struct {
 	Robot       string
 	Video       string
 	VideoExists bool
+	WinCount    int
+	LossCount   int
+
+	Fights []Fight
 }

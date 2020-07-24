@@ -41,22 +41,24 @@
 
               <tr>
                 <th>My Robot</th>
-                <td>{{.fight.MyRobot}}</td>
+                <td>{{.fight.MyRobot}}
+                  
+                  {{if eq .fight.MyWin true}} 
+                  <span style="border-radius: 10%;color: Black; padding: 4px; background: #FFD739;">Win</span>
+                  {{else}}
+                  {{end}}
+                </td>
               </tr>
 
               <tr>
                 <th>Opponent</th>
-                <td>{{.fight.OpponentRobot}}</td>
-              </tr>
-              <tr>
-                <th>Winner</th>
-                
-                <td>
+                <td>{{.fight.OpponentRobot}}   
                   {{if eq .fight.MyWin true}} 
-                  {{.fight.MyRobot}}
+                  
                   {{else}}
-                  {{.fight.OpponentRobot}}
+                  <span style="border-radius: 10%;color: Black; padding: 4px; background: #FFD739;">Win</span>
                   {{end}}
+
                 </td>
               </tr>
               
