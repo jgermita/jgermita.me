@@ -123,11 +123,11 @@
 
       <!--<p>{{.bot.Desc}}</p>-->
       <div class="pure-g">
-        <div class="pure-u-11-24">
+        <div class="pure-u-8-24">
 
           
           <br>
-      <table class="pure-table">
+      <table class="pure-table" width="100%">
         <thead>
           <tr>
             <th>Events</th>
@@ -171,19 +171,22 @@
 
         </div>
         <div class="pure-u-1-12"></div>
-        <div class="pure-u-11-24">
+        <div class="pure-u-14-24">
 
 
           <br>
           <img class="pure-img-responsive" src="/public/img/level5assets/robotpics/{{.bot.Img}}">
+          <br>
+          {{.bot.Desc}}
 
           <br>
           <br>
-          <table class="pure-table pure-table-horizontal">
+          <table class="pure-table pure-table-horizontal" width="100%">
 
             <tbody>
 
               <tr>
+                
                 <th>Weight Class</th>
                 <td>{{.bot.WeightClass}}</td>
               </tr>
@@ -196,20 +199,20 @@
                 <th>Status</th>
                 <td> 
                     {{if eq .bot.Status "In Service"}} 
-                    <span style="border-radius: 10%;color: white; padding: 4px; background: green;">
+                    <span style="border-radius: 5%;color: white; padding: 4px; background: green;">
                     {{else if eq .bot.Status "On Hold"}}
-                    <span style="border-radius: 10%;color: black; padding: 4px; background: #BEBEBE;">
+                    <span style="border-radius: 5%;color: black; padding: 4px; background: #BEBEBE;">
                     {{else if eq .bot.Status "Retired"}}
-                    <span style="border-radius: 10%;color: white; padding: 4px; background: #606060;">
+                    <span style="border-radius: 5%;color: white; padding: 4px; background: #606060;">
                     {{else}}
-                    <span style="border-radius: 10%;color: black; padding: 4px;">
+                    <span style="border-radius: 5%;color: black; padding: 4px;">
                     {{end}}
                     {{.bot.Status}}</span> 
             </td>
               </tr>
               <tr>
-                <th>W-L</th>
-                <td>{{.bot.Wins}} - {{.bot.Losses}} ({{.bot.Winrate}}%)</td>
+                <th>Career Record</th>
+                <td>{{.bot.Wins}}W - {{.bot.Losses}}L ({{.bot.Winrate}}%)</td>
               </tr>
               
             </tbody>
@@ -218,42 +221,33 @@
         </div>
       </div>
 
-
+<h2> Event Results</h2>
 
       {{range .bot.Events}}
-      <h2><a href="{{.Report}}" target="_blank" id="{{.Name}}">{{.Name}}</a></h2>
+      <h3 id="{{.Name}}">{{.Name}}</h3>
       
-      {{if eq .Video ""}}
+      <div class="pure-g">
+      <div class="pure-u-8-24">
+        🗺️ <i>{{.Location}}</i> / 📅 <i>{{.Date}}</i><br>
 
-      {{else}}
-      <iframe width="560" height="315" src="https://www.youtube.com/embed/{{.Video}}" frameborder="0"
-      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-      <br><br>{{end}}<p>{{.Robot}} placed {{if eq .Finish "1st"}} 
-        <span style="border-radius: 25%;color: black; padding: 4px; background: #FFD739;">
-        {{else if eq .Finish "2nd"}}
-        <span style="border-radius: 25%;color: black; padding: 4px; background: #BEBEBE;">
-        {{else if eq .Finish "3rd"}}
-        <span style="border-radius: 25%;color: white; padding: 4px; background: #BB8644;">
-        {{else if eq .Finish "NR"}}
-        <span style="border-radius: 25%;color: white; padding: 4px; background: #606060;">
-        {{else if eq .Finish ""}}
-        <span >
-        {{else}}
-        <span style="border-radius: 25%;color: white; padding: 4px; background: #0094B2;">
+        {{if eq .Website "" }}{{else}}
+        🔗 <i><a href="{{.Website}}" target="_blank">Website</a></i> / 
         {{end}}
-        {{.Finish}}</span>
-
-        with a record of {{.WinCount}} wins and {{.LossCount}} losses
-        
-      </p>
-
-      <table class="pure-table">
+        {{if eq .Bracket "" }}{{else}}
+        🏆 <i><a href="{{.Bracket}}" target="_blank">Bracket</a></i> / 
+        {{end}}
+        📋 <i><a href="{{.Report}}" target="_blank">Report</a></i><br><p>
+        <hr>
+          {{.Robot}} placed <b>{{.Finish}}</b>
+          with a bracket record of {{.WinCount}}W - {{.LossCount}}L. 
+          
+        </p>
+      <table class="pure-table" width="100%">
         <thead>
           <tr>
-            <th>
+            <th width="20%">
               <img class="pure-img-responsive" src="/public/img/video.png"></th>
-            <th>Opponent</th>
+            <th>Fight</th>
             <th>Win</th>
           </tr>
         </thead>
@@ -261,7 +255,12 @@
         <tbody>
         {{range .Fights}}
         
-            <tr>
+        
+            <tr
+            {{if .IsRumble}}
+            style="background:#ffa6007e"
+            {{end}}
+            >
               <td>
                 {{if .VideoExists}}
                 <a href="/level5/fights/{{.Id}}">
@@ -284,9 +283,18 @@
                 </a></td>
               <td>
                 {{if .MyWin}}
+                
+                {{if .IsRumble}}
+                🏆
+                {{else}}
                 ✅
+                {{end}}
+                {{else}}
+                {{if .IsRumble}}
+                -
                 {{else}}
                 ❌
+                {{end}}
                 {{end}}
   
                 {{end}}
@@ -295,10 +303,30 @@
           </tbody>
         </table>
 
+      </div>
+      <div class="pure-u-1-12"></div>
+      <div class="pure-u-14-24">
+        {{if eq .Video ""}}
 
+
+      {{else}}
+      
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/{{.Video}}" frameborder="0"
+      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+      <br><br>{{end}}
+
+
+
+      </div>
+      
+    </div>
         <hr>
       {{end}}
 
+      
+      <br>
+      
         </div>
       
 

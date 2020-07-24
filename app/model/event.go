@@ -11,6 +11,9 @@ type Event struct {
 	VideoExists bool
 	WinCount    int
 	LossCount   int
+	Website     string
+	Location    string
+	Bracket     string
 
 	Fights []Fight
 }

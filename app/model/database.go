@@ -27,7 +27,7 @@ func (database *Database) OpenDatabase(filename string) {
 	//
 	//
 
-	var localtest = true
+	var localtest = false
 
 	if localtest {
 		fileName = "./app.db"
@@ -247,7 +247,7 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 		Wins = ""
 		Losses = ""
 		thisBot.Wins = 0
-		winCount, err := db.Query("select sum(case when myWin=\"true\" then 1 else 0 end) from fights where myRobot = ?", thisBot.Name)
+		winCount, err := db.Query("select sum(case when myWin=\"true\" then 1 else 0 end) from fights where myRobot = ? AND (id < 99990000)", thisBot.Name)
 		if err != nil {
 			thisBot.Wins = 0
 		} else {
@@ -257,7 +257,7 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 
 		}
 
-		lossCount, err := db.Query("select sum(case when myWin=\"false\" then 1 else 0 end) from fights where myRobot = ?", thisBot.Name)
+		lossCount, err := db.Query("select sum(case when myWin=\"false\" then 1 else 0 end) from fights where myRobot = ? AND (id < 99990000)", thisBot.Name)
 
 		thisBot.Losses = 0
 		if err != nil {
@@ -269,7 +269,7 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 
 		}
 
-		allEvents, err := db.Query("select name, finish, date, report, video from events where robot = ? ORDER BY id DESC", thisBot.Name)
+		allEvents, err := db.Query("select name, finish, date, report, video, location, website, bracket from events where robot = ? ORDER BY id DESC", thisBot.Name)
 		defer allEvents.Close()
 		for allEvents.Next() {
 			// var thisEvent string
@@ -280,8 +280,11 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 			var eDate string
 			var eReport string
 			var eVideo string
+			var eWebsite string
+			var eLocation string
+			var eBracket string
 
-			err := allEvents.Scan(&eName, &eFinish, &eDate, &eReport, &eVideo)
+			err := allEvents.Scan(&eName, &eFinish, &eDate, &eReport, &eVideo, &eLocation, &eWebsite, &eBracket)
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -291,6 +294,9 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 			thisEvent.Report = eReport
 			thisEvent.Video = eVideo
 			thisEvent.Robot = thisBot.Name
+			thisEvent.Website = eWebsite
+			thisEvent.Location = eLocation
+			thisEvent.Bracket = eBracket
 
 			thisEvent.VideoExists = eVideo != ""
 
@@ -324,13 +330,17 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 				eFight.MyWin = MyWin
 				eFight.Video = Video
 				eFight.Recap = Recap
+				eFight.IsRumble = FightId > 99990000
 
 				eFight.VideoExists = Video != ""
 
-				if MyWin {
-					win++
-				} else {
-					loss++
+				if !eFight.IsRumble {
+
+					if MyWin {
+						win++
+					} else {
+						loss++
+					}
 				}
 
 				thisEvent.Fights = append(thisEvent.Fights, eFight)
@@ -448,6 +458,8 @@ func (database *Database) GetFight(id string) Fight {
 		thisFight.MyWin = MyWin
 		thisFight.Video = Video
 		thisFight.Recap = Recap
+
+		thisFight.IsRumble = FightId > 99990000
 		println(Video)
 
 		thisFight.VideoExists = Video != ""
@@ -512,7 +524,7 @@ func (database *Database) GetRecord() string {
 		Wins = ""
 		Losses = ""
 		thisBot.Wins = 0
-		winCount, err := db.Query("select sum(case when myWin=\"true\" then 1 else 0 end) from fights where myRobot = ?", thisBot.Name)
+		winCount, err := db.Query("select sum(case when myWin=\"true\" then 1 else 0 end) from fights where myRobot = ? AND (id < 99990000)", thisBot.Name)
 		if err != nil {
 			thisBot.Wins = 0
 		} else {
@@ -522,7 +534,7 @@ func (database *Database) GetRecord() string {
 
 		}
 
-		lossCount, err := db.Query("select sum(case when myWin=\"false\" then 1 else 0 end) from fights where myRobot = ?", thisBot.Name)
+		lossCount, err := db.Query("select sum(case when myWin=\"false\" then 1 else 0 end) from fights where myRobot = ? AND (id < 99990000)", thisBot.Name)
 
 		thisBot.Losses = 0
 		if err != nil {
