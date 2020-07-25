@@ -12,9 +12,12 @@
   <div id="main">
     <div class="header">
       <h1>{{.fight.Event}}</h1>
-      <h2>{{.fight.MyRobot}}
-        {{if eq .fight.IsRumble false}} vs {{else}} - {{end}}
-         {{.fight.OpponentRobot}}</h2>
+      <h2>{{.fight.Type}} - {{.fight.MyRobot}}
+        {{if eq .fight.IsRumble false}} vs {{end}}
+        {{if eq .fight.IsRumble false}} 
+          - {{.fight.OpponentRobot}}
+        {{end}}</h2>
+
     </div>
 
     <div class="content">
@@ -26,7 +29,7 @@
 
 
 
-        <div class="pure-u-8-24">
+        <div class="pure-u-9-24">
 
           {{if eq .fight.Recap ""}}{{else}}
           <h2>Fight Recap</h2>
@@ -37,7 +40,10 @@
           <table class="pure-table pure-table-horizontal">
 
             <tbody>
-
+              <tr>
+                <th></th>
+                <td>{{.fight.Type}}</td>
+              </tr>
               <tr>
                 <th>My Robot</th>
                 <td>{{.fight.MyRobot}}
@@ -46,24 +52,26 @@
                   <span style="border-radius: 10%;color: Black; padding: 4px; background: #FFD739;">Win</span>
                     
                   {{else}}
+                  {{if eq .fight.IsRumble true}}
                   <span style="border-radius: 10%;color: Black; padding: 4px; background: #ff010185;">Loss</span>
-                  {{end}}
+                  {{end}}{{end}}
                 </td>
               </tr>
-
+              {{if eq .fight.IsRumble false}}
               <tr>
                 <th>Opponent</th>
                 <td>{{.fight.OpponentRobot}}   
-                  {{if eq .fight.IsRumble true}}
+                  
                   {{if eq .fight.MyWin true}} 
                   
                   {{else}}
                   <span style="border-radius: 10%;color: Black; padding: 4px; background: #FFD739;">Win</span>
                   {{end}}
-                  {{end}}
 
                 </td>
               </tr>
+              
+              {{end}}
               
             </tbody>
           </table>
@@ -72,7 +80,7 @@
           <br>
 
         </div>
-        <div class="pure-u-1-12"></div>
+        <div class="pure-u-1-24"></div>
         <div class="pure-u-14-24">
           {{if eq .fight.VideoExists true}}
       

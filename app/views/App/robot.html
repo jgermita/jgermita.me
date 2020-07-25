@@ -123,7 +123,7 @@
 
       <!--<p>{{.bot.Desc}}</p>-->
       <div class="pure-g">
-        <div class="pure-u-8-24">
+        <div class="pure-u-9-24">
 
           
           <br>
@@ -170,7 +170,7 @@
       </table>
 
         </div>
-        <div class="pure-u-1-12"></div>
+        <div class="pure-u-1-24"></div>
         <div class="pure-u-14-24">
 
 
@@ -227,7 +227,7 @@
       <h3 id="{{.Name}}">{{.Name}}</h3>
       
       <div class="pure-g">
-      <div class="pure-u-8-24">
+      <div class="pure-u-9-24">
         🗺️ <i>{{.Location}}</i> / 📅 <i>{{.Date}}</i><br>
 
         {{if eq .Website "" }}{{else}}
@@ -247,7 +247,8 @@
           <tr>
             <th width="20%">
               <img class="pure-img-responsive" src="/public/img/video.png"></th>
-            <th>Fight</th>
+            <th>#</th>
+            <th>Vs</th>
             <th>Win</th>
           </tr>
         </thead>
@@ -276,11 +277,12 @@
                 {{end}}
   
               </td>
+
+              <td><a href="/level5/fights/{{.Id}}">{{.Type}}</a></td>
   
 
-              <td><a href="/level5/fights/{{.Id}}">
-                {{.OpponentRobot}}
-                </a></td>
+              <td>
+                {{.OpponentRobot}}</td>
               <td>
                 {{if .MyWin}}
                 
@@ -304,7 +306,7 @@
         </table>
 
       </div>
-      <div class="pure-u-1-12"></div>
+      <div class="pure-u-1-24"></div>
       <div class="pure-u-14-24">
         {{if eq .Video ""}}
 

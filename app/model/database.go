@@ -315,8 +315,9 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 					MyWin         bool
 					Video         string
 					Recap         string
+					Type          string
 				)
-				err := eFights.Scan(&FightId, &Event, &MyRobot, &OpponentRobot, &MyWin, &Video, &Recap)
+				err := eFights.Scan(&FightId, &Event, &MyRobot, &OpponentRobot, &MyWin, &Video, &Recap, &Type)
 				if err != nil {
 					log.Fatal(err)
 				}
@@ -330,7 +331,8 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 				eFight.MyWin = MyWin
 				eFight.Video = Video
 				eFight.Recap = Recap
-				eFight.IsRumble = FightId > 99990000
+				eFight.Type = Type
+				eFight.IsRumble = Type == "Rumble"
 
 				eFight.VideoExists = Video != ""
 
@@ -392,9 +394,10 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 		MyWin         bool
 		Video         string
 		Recap         string
+		Type          string
 	)
 	for rows.Next() {
-		err := rows.Scan(&FightId, &Event, &MyRobot, &OpponentRobot, &MyWin, &Video, &Recap)
+		err := rows.Scan(&FightId, &Event, &MyRobot, &OpponentRobot, &MyWin, &Video, &Recap, &Type)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -406,6 +409,7 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 		thisFight.OpponentRobot = OpponentRobot
 		thisFight.MyWin = MyWin
 		thisFight.Video = Video
+		thisFight.Type = Type
 
 		thisFight.VideoExists = Video != ""
 
@@ -444,9 +448,10 @@ func (database *Database) GetFight(id string) Fight {
 		MyWin         bool
 		Video         string
 		Recap         string
+		Type          string
 	)
 	for rows.Next() {
-		err := rows.Scan(&FightId, &Event, &MyRobot, &OpponentRobot, &MyWin, &Video, &Recap)
+		err := rows.Scan(&FightId, &Event, &MyRobot, &OpponentRobot, &MyWin, &Video, &Recap, &Type)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -458,6 +463,7 @@ func (database *Database) GetFight(id string) Fight {
 		thisFight.MyWin = MyWin
 		thisFight.Video = Video
 		thisFight.Recap = Recap
+		thisFight.Type = Type
 
 		thisFight.IsRumble = FightId > 99990000
 		println(Video)

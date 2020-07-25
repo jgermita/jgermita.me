@@ -10,4 +10,5 @@ type Fight struct {
 	VideoExists   bool
 	Recap         string
 	IsRumble      bool
+	Type          string
 }
