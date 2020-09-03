@@ -29,7 +29,12 @@ func (c App) Projects() revel.Result {
 }
 
 func (c App) First() revel.Result {
-	return c.Render()
+
+	db := new(model.Database)
+
+	var bots = db.GetFirstRobots()
+
+	return c.Render(bots)
 }
 
 func (c App) Software() revel.Result {

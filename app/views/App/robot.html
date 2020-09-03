@@ -229,7 +229,7 @@
 
           <div id="picContainer" class="tabcontent" style="position:relative; text-align:right; font-family: 'Roboto';font-size: 48px; color:white;">
             <img id="RobotPic" class="pure-img-responsive" src="/public/img/level5assets/robotpics/{{.bot.Name2}}_{{.bot.CurrentVersion}}.jpg">
-            <div id="versionDisplay" style="position: absolute; bottom: 16px; right: 16px;">V{{.bot.CurrentVersion}}</div>
+            <div id="versionDisplay" style="position: absolute; bottom: 16px; right: 16px; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">V{{.bot.CurrentVersion}}</div>
             </div>
             <div class="tab">
               {{range .bot.Versions}} 

@@ -581,3 +581,51 @@ func (database *Database) GetRecord() string {
 
 	return answer
 }
+
+func (database *Database) GetFirstRobots() []FirstRobot {
+	db, err := sql.Open("sqlite3",
+		fileName)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var firstRobots []FirstRobot
+
+	// Get robot data
+	rows, err := db.Query("select * from firstrobots order by year desc")
+
+	var thisRobot FirstRobot
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+
+		thisRobot.Video = ""
+		thisRobot.Award = ""
+		thisRobot.Tba = ""
+		err := rows.Scan(&thisRobot.Id, &thisRobot.Team, &thisRobot.Year, &thisRobot.Name, &thisRobot.Img, &thisRobot.Video, &thisRobot.Award, &thisRobot.Role)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		thisRobot.Videos = strings.Split(thisRobot.Video, ",")
+		thisRobot.Awards = strings.Split(strings.Trim(thisRobot.Award, "\n"), "\n")
+
+		if strings.Contains(thisRobot.Team, "FRC") && (thisRobot.Name != "Nimbus") {
+			thisRobot.Tba = "https://www.thebluealliance.com/team/" + strings.Trim(thisRobot.Team, "FRC") + "/" + thisRobot.Year
+		}
+
+		thisRobot.Name = strings.ToUpper(thisRobot.Name)
+		thisRobot.Team = strings.Trim(strings.Trim(thisRobot.Team, "FTC"), "FRC")
+
+		firstRobots = append(firstRobots, thisRobot)
+	}
+	err = rows.Err()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return firstRobots
+}
