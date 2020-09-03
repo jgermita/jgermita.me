@@ -1,6 +1,7 @@
 {{set . "title" .bot.Name}}
 {{template "header.html" .}}
 
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,900&display=swap" rel="stylesheet">
 <style>
 	
 	/* Additionnal styles */
@@ -108,6 +109,50 @@
       }
     }
   </script>
+
+<script>
+  function changeVersion(id) {
+    document.getElementById("RobotPic").src = "/public/img/level5assets/robotpics/{{.bot.Name2}}_" + id + ".jpg"
+    document.getElementById("versionDisplay").innerHTML = "V" + id
+  }
+</script>
+
+<style>
+  /* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  border: 1px solid #ccc;
+  border-bottom: none;
+}
+
+</style>
 <body>
 
 
@@ -127,6 +172,10 @@
 
           
           <br>
+
+          
+          {{if not .bot.Events}}
+          {{else}}
       <table class="pure-table" width="100%">
         <thead>
           <tr>
@@ -136,6 +185,7 @@
         </thead>
 
         <tbody>
+          
           {{range .bot.Events}}
           <tr>
             <td>
@@ -169,14 +219,27 @@
         </tbody>
       </table>
 
+      {{end}}
         </div>
         <div class="pure-u-1-24"></div>
         <div class="pure-u-14-24">
 
 
           <br>
-          <img class="pure-img-responsive" src="/public/img/level5assets/robotpics/{{.bot.Img}}">
-          <br>
+
+          <div id="picContainer" class="tabcontent" style="position:relative; text-align:right; font-family: 'Roboto';font-size: 48px; color:white;">
+            <img id="RobotPic" class="pure-img-responsive" src="/public/img/level5assets/robotpics/{{.bot.Name2}}_{{.bot.CurrentVersion}}.jpg">
+            <div id="versionDisplay" style="position: absolute; bottom: 16px; right: 16px;">V{{.bot.CurrentVersion}}</div>
+            </div>
+            <div class="tab">
+              {{range .bot.Versions}} 
+                  <button class="tablinks"
+                  onclick = "changeVersion('{{.}}')" >V{{.}}</button>
+              
+              {{end}}
+            </div>
+          
+          <hr>
           {{.bot.Desc}}
 
           <br>
@@ -195,6 +258,14 @@
                 <th>Weapon</th>
                 <td>{{.bot.Weapon}}</td>
               </tr>
+              
+              <th>Current Version</th>
+              <td>
+
+                <span style="border-radius: 5%;color: black; padding: 4px; background: #BEBEBE;">
+                  V{{.bot.CurrentVersion}}
+                </span>
+              </td>
               <tr>
                 <th>Status</th>
                 <td> 
@@ -213,6 +284,8 @@
               <tr>
                 <th>Career Record</th>
                 <td>{{.bot.Wins}}W - {{.bot.Losses}}L ({{.bot.Winrate}}%)</td>
+              </tr>
+              <tr>
               </tr>
               
             </tbody>
@@ -325,6 +398,17 @@
     </div>
         <hr>
       {{end}}
+      {{if not .bot.Events}}
+        {{.bot.Name}} has not yet competed at any events. 
+      {{end}}
+
+      {{if eq .bot.Media ""}}{{else}}
+      <h2>Media</h2>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{.bot.Media}}" frameborder="0"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+            <br><br>
+          {{end}}
 
       
       <br>

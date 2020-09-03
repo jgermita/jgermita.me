@@ -88,6 +88,7 @@ func (database *Database) GetAllRobots() []Robot {
 		weapon      string
 		desc        string
 		rgb         string
+		versions    string
 	)
 
 	// Get robot data
@@ -98,7 +99,7 @@ func (database *Database) GetAllRobots() []Robot {
 	defer rows.Close()
 	for rows.Next() {
 
-		err := rows.Scan(&Id, &Name, &desc, &WeightClass, &weapon, &Status, &logo, &img, &media, &rgb)
+		err := rows.Scan(&Id, &Name, &desc, &WeightClass, &weapon, &Status, &logo, &img, &media, &rgb, &versions)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -223,6 +224,7 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 		weapon      string
 		desc        string
 		rgb         string
+		versions    string
 	)
 
 	// Get robot data
@@ -233,16 +235,26 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 	defer rows.Close()
 	for rows.Next() {
 
-		err := rows.Scan(&Id, &Name, &desc, &WeightClass, &weapon, &Status, &logo, &img, &media, &rgb)
+		err := rows.Scan(&Id, &Name, &desc, &WeightClass, &weapon, &Status, &logo, &img, &media, &rgb, &versions)
 		if err != nil {
 			log.Fatal(err)
 		}
 		thisBot.Id = Id
 		thisBot.Name = strings.Title(Name)
+		thisBot.Name2 = strings.ToLower(Name)
 		thisBot.WeightClass = WeightClass
 		thisBot.Status = Status
 		thisBot.Desc = desc
 		thisBot.Rgb = rgb
+
+		v_temp := strings.Split(versions, ",")
+		for i := 0; i < len(v_temp)/2; i++ {
+			j := len(v_temp) - i - 1
+			v_temp[i], v_temp[j] = v_temp[j], v_temp[i]
+		}
+
+		thisBot.Versions = v_temp
+		thisBot.CurrentVersion = thisBot.Versions[0]
 
 		Wins = ""
 		Losses = ""
@@ -358,11 +370,8 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 
 		thisBot.Logo = logo
 		thisBot.Img = img
-		thisBot.Media = strings.Split(media, ",")
+		thisBot.Media = media
 
-		if len(thisBot.Media) == 1 && thisBot.Media[0] == "" {
-			thisBot.Media = nil
-		}
 		thisBot.Weapon = weapon
 		thisBot.Winrate = math.Floor(float64(thisBot.Wins) / (float64(thisBot.Wins) + float64(thisBot.Losses)) * 100)
 
@@ -503,6 +512,7 @@ func (database *Database) GetRecord() string {
 		totalWins   int
 		totalLosses int
 		answer      string
+		versions    string
 	)
 
 	totalWins = 0
@@ -516,12 +526,14 @@ func (database *Database) GetRecord() string {
 	defer rows.Close()
 	for rows.Next() {
 
-		err := rows.Scan(&Id, &Name, &desc, &WeightClass, &weapon, &Status, &logo, &img, &media, &rgb)
+		err := rows.Scan(&Id, &Name, &desc, &WeightClass, &weapon, &Status, &logo, &img, &media, &rgb, &versions)
 		if err != nil {
 			log.Fatal(err)
 		}
 		thisBot.Id = Id
 		thisBot.Name = strings.Title(Name)
+
+		thisBot.Name2 = strings.ToLower(Name)
 		thisBot.WeightClass = WeightClass
 		thisBot.Status = Status
 		thisBot.Desc = desc
