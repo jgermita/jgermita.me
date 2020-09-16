@@ -22,6 +22,7 @@ GET     /level5/fights/:id                          App.fight
 GET     /todo                          App.todo
 GET     /services                          App.services
 GET     /league                        App.league
+GET     /crresources                        App.crresources
 # GET     /countdown                          App.countdown
 # GET     /countdown5012                          App.countdown5012
 # GET     /blog/post                              App.post

@@ -124,7 +124,7 @@ func (database *Database) GetAllEvents() []Event {
 	var allEvents []Event
 
 	// Get robot data
-	rows, err := db.Query("select name, robot, finish, date, report, video from events order by date DESC, robot ASC")
+	rows, err := db.Query("select name, robot, finish, date, report, video from events order by id DESC, robot ASC")
 	if err != nil {
 		log.Fatal(err)
 	}

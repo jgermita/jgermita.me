@@ -1,7 +1,6 @@
 {{set . "title" .bot.Name}}
 {{template "header.html" .}}
 
-<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,900&display=swap" rel="stylesheet">
 <style>
 	
 	/* Additionnal styles */
@@ -227,7 +226,7 @@
 
           <br>
 
-          <div id="picContainer" class="tabcontent" style="position:relative; text-align:right; font-family: 'Roboto';font-size: 48px; color:white;">
+          <div id="picContainer" class="tabcontent" style="position:relative; text-align:right; font-family: 'Roboto'; font-size: 48px; font-weight:900; font-style: italic; color:white;">
             <img id="RobotPic" class="pure-img-responsive" src="/public/img/level5assets/robotpics/{{.bot.Name2}}_{{.bot.CurrentVersion}}.jpg">
             <div id="versionDisplay" style="position: absolute; bottom: 16px; right: 16px; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">V{{.bot.CurrentVersion}}</div>
             </div>
@@ -301,15 +300,15 @@
       
       <div class="pure-g">
       <div class="pure-u-9-24">
-        🗺️ <i>{{.Location}}</i> / 📅 <i>{{.Date}}</i><br>
-
+        📅 <i>{{.Date}}</i> / 📍 <i>{{.Location}}</i><br>
+        📋 <i><a href="{{.Report}}" target="_blank">Report</a></i>
         {{if eq .Website "" }}{{else}}
-        🔗 <i><a href="{{.Website}}" target="_blank">Website</a></i> / 
+        / 🔗 <i><a href="{{.Website}}" target="_blank">Website</a></i> 
         {{end}}
         {{if eq .Bracket "" }}{{else}}
-        🏆 <i><a href="{{.Bracket}}" target="_blank">Bracket</a></i> / 
-        {{end}}
-        📋 <i><a href="{{.Report}}" target="_blank">Report</a></i><br><p>
+        / 🏆 <i><a href="{{.Bracket}}" target="_blank">Bracket</a></i>
+        {{end}}<br>
+        <p>
         <hr>
           {{.Robot}} placed <b>{{.Finish}}</b>
           with a bracket record of {{.WinCount}}W - {{.LossCount}}L. 

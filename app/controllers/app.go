@@ -70,6 +70,10 @@ func (c App) Services() revel.Result {
 	return c.Render()
 }
 
+func (c App) Crresources() revel.Result {
+	return c.Render()
+}
+
 func CreateUser(name string, ign string) model.User {
 	var thisUser model.User
 

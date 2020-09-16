@@ -1,4 +1,65 @@
   {{if .DevMode}}
     <!--{{template "debug.html" .}}-->
   {{end}}
+
+  <hr>
+
+  <style> 
+  div.footer {
+    position: absolute;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+  }
+
+    .fade-in {
+    animation: fadeIn ease 2s;
+    -webkit-animation: fadeIn ease 2s;
+    -moz-animation: fadeIn ease 2s;
+    -o-animation: fadeIn ease 2s;
+    -ms-animation: fadeIn ease 2s;
+    }
+    @keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+    }
+
+    @-moz-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+    }
+
+    @-webkit-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+    }
+
+    @-o-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+    }
+
+    @-ms-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+    }
+
+    img.social {
+      padding-right: 10px;
+      padding-left: 10px;
+
+    }
+  
+  </style>
+  <div class="content footer fade-in">
+    <center>
+    <a href="https://www.facebook.com/jeremy.germita" target="_blank"><img class="pure-img-responsive social" width="42px" src="/public/img/fb.png"/></a>
+    <a href="https://instagram.com/robots.jpg" target="_blank"><img class="pure-img-responsive social" width="42px" src="/public/img/ig.png"/></a>
+    <a href="https://www.youtube.com/channel/UCZVhE-wuYzTZE4Ozd0DoFGA?view_as=subscriber" target="_blank"><img class="pure-img-responsive social" width="42px" src="/public/img/yt.png"/></a>
+    <a href="https://www.linkedin.com/in/jeremy-germita-77a15042/" target="_blank"><img class="pure-img-responsive social" width="42px" src="/public/img/linkedin.png"/></a>
+    <a href="mailto:jeremy.germita@gmail.com"><img class="pure-img-responsive social" width="42px" src="/public/img/email.png"/></a>
+  </center>
+  </div>
+
+
 </html>

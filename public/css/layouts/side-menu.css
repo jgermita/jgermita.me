@@ -1,5 +1,6 @@
 body {
     color: #777;
+    font-family: 'Roboto', sans-serif;
 }
 
 .pure-img-responsive {
@@ -78,7 +79,6 @@ The content `<div>` is where all your content goes.
 The `#menu` `<div>` is the parent `<div>` that contains the `.pure-menu` that
 appears on the left side of the page.
 */
-
 #menu {
     margin-left: -150px; /* "#menu" width */
     width: 150px;
@@ -87,9 +87,10 @@ appears on the left side of the page.
     left: 0;
     bottom: 0;
     z-index: 1000; /* so the menu or its navicon stays above all content */
-    background: #191818;
+    background: #050505;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    font-family: 'Roboto', sans-serif;
 }
     /*
     All anchors inside the menu should be styled like this.
@@ -114,14 +115,14 @@ appears on the left side of the page.
     */
     #menu .pure-menu ul,
     #menu .pure-menu .menu-item-divided {
-        border-top: 1px solid #333;
+        border-top: 1px solid #221f3b;
     }
         /*
         Change color of the anchor links on hover/focus.
         */
         #menu .pure-menu li a:hover,
         #menu .pure-menu li a:focus {
-            background: #333;
+            background: #221f3b;
         }
 
     /*
@@ -129,7 +130,11 @@ appears on the left side of the page.
     */
     #menu .pure-menu-selected,
     #menu .pure-menu-heading {
-        background: #1f8dd6;
+        
+        font-weight:900;
+        font-style: italic;
+
+        background: #6f4a8e;
     }
         /*
         This styles a link within a selected menu item `<li>`.
@@ -142,6 +147,7 @@ appears on the left side of the page.
     This styles the menu heading.
     */
     #menu .pure-menu-heading {
+        
         font-size: 110%;
         color: #fff;
         margin: 0;
