@@ -1,5 +1,6 @@
 body {
     color: #777;
+    background-color: #ebebeb;
     font-family: 'Roboto', sans-serif;
 }
 
@@ -252,3 +253,16 @@ Hides the menu at `48em`, but modify this based on your app's needs.
         left: 150px;
     }
 }
+
+.pager, .older, .newer, button, .btn, .btn-primary {
+    background-color: #221f3b;
+    border: none;
+    border-color:  #221f3b;
+    color: white;
+    border-radius: 0%;
+}
+button:hover, .btn:hover, .btn-primary:hover {
+    background-color: #6f4a8e; /* Green */
+    color: white;
+  }
+  

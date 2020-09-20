@@ -1,20 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
+{{set . "title" "oops!"}}
+{{template "header.html" .}}
+
 	<head>
-		<title>Not found</title>
+		<title>Oops!</title>
 	</head>
 	<body>
-{{if eq .RunMode "dev"}}
-{{template "errors/404-dev.html" .}}
-{{else}}
-	{{with .Error}}
-	<h1>
-		{{.Title}}
-	</h1>
-	<p>
-		{{.Description}}
-	</p>
-	{{end}}
-{{end}}
+
+		<div id="main">
+			<div class="header">
+			  <h1>page not found</h1>
+			</div>
+		</div>
+
 	</body>
-</html>
+
