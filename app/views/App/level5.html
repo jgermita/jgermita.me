@@ -99,8 +99,8 @@
 
 	</style>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-	<script src="https://www.youtube.com/iframe_api"></script>
-	<script>
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
 	$(document).ready(function () {
 		var pos = 0,
 			slides = $('.slide'),
@@ -143,7 +143,8 @@
         <div class="header">
             <div class="pure-g">
                 <div class="pure-u-1-1">
-                    <img class="pure-img-responsive" src="/public/img/l5logosmall.png">
+                    <img class="pure-img-responsive"
+                        src="/public/img/l5logosmall.png">
                     <br><br>
                 </div>
             </div>
@@ -153,31 +154,34 @@
 
             <br>
             <div class="video-slider">
-              <!-- SLIDE 1 -->
-              {{range .videos}}
-                          {{if .VideoExists}}
-                          
-                          <div class="slide" id="slide">
-                            <!--<iframe width="560" height="315" src="https://www.youtube.com/embed/{{.}}" frameborder="0"
+                <!-- SLIDE 1 -->
+                {{range .videos}}
+                {{if .VideoExists}}
+
+                <div class="slide" id="slide">
+                    <!--<iframe width="560" height="315" src="https://www.youtube.com/embed/{{.}}" frameborder="0"
                             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>-->
-                            <iframe class="video" src="https://www.youtube.com/embed/{{.Video}}?ecver=2&enablejsapi=1"></iframe>
-                          </div>
-                          {{else}}
-            
-                          {{end}}
-                    {{end}}
-              {{range .bot.Media}}
-              
-      
-              {{end}}
-              <!-- END OF SLIDES -->
-              <div class="slide-arrow left"></div>
-              <div class="slide-arrow right"></div>
-          </div>
-          <br>
+                    <iframe class="video"
+                        src="https://www.youtube.com/embed/{{.Video}}?ecver=2&enablejsapi=1"></iframe>
+                </div>
+                {{else}}
+
+                {{end}}
+                {{end}}
+                {{range .bot.Media}}
+
+
+                {{end}}
+                <!-- END OF SLIDES -->
+                <div class="slide-arrow left"></div>
+                <div class="slide-arrow right"></div>
+            </div>
+            <br>
             <p>
-                Level 5 Robotics is the brand that I've created around the competitive combat robots that I build. All
-                of my robots are designed by myself using Autodesk Inventor and manufactured using a variety of machines and tools.
+                Level 5 Robotics is the brand that I've created around the
+                competitive combat robots that I build. All
+                of my robots are designed by myself using Autodesk Inventor and
+                manufactured using a variety of machines and tools.
 
                 <br><br>
                 Learn more about my robots below!
@@ -187,101 +191,147 @@
             <h2 class="content-subhead">Robots</h2>
             {{.record}}
             <br>
-            
 
-            
-            {{range .bots}} 
+
+
+            {{range .bots}}
             <div class="robotContainer">
-            <table class="pure-table pure-table-horizontal">
-                
-                    <tr><td colspan="2" style="text-align: center;"><a href="/level5/{{.Name}}">{{.Name}}</a></td>
-                    <tr><td colspan="2">
-                    <div class="robotPic" style="margin: 0 auto; border-style: solid; border-width:7px; border-color: #{{.Rgb}};">
-                        <a href="/level5/{{.Name}}"><img src="/public/img/level5assets/robotpics/{{.Name2}}_{{.CurrentVersion}}.jpg"/></a>
-                    </div>
-                            
-                        </td>
-                    </tr>
-                    <tr> <th>Weight Class:</th><td>{{.WeightClass}}</td></tr>
-                    <tr> <th>Weapon Type:</th><td>{{.Weapon}}</td></tr>
-                    <tr> <th>W-L:</th><td>{{.Wins}} - {{.Losses}} ({{.Winrate}}%)</td></tr>
-                    <tr> <th>Status: </th><td>{{if eq .Status "In Service"}}
-                        <span style="border-radius: 5%;color: white; padding: 4px; background: green;">
-                            {{else if eq .Status "On Hold"}}
-                            <span style="border-radius: 5%;color: black; padding: 4px; background: #BEBEBE;">
-                                {{else if eq .Status "Retired"}}
-                                <span style="border-radius: 5%;color: white; padding: 4px; background: #606060;">
-                                    {{else}}
-                                    <span style="border-radius: 5%;color: black; padding: 4px;">
-                                        {{end}}
-                                        {{.Status}}</span></td></tr>
-            </table>
+                <table class="pure-table pure-table-horizontal">
 
-            </div>
-            {{end}}
-            <br>
-            <hr>
-            <div  style="margin-top:1700px;">
-            <h2 class="content-subhead">Events</h2>
-            <table class="pure-table">
-                <thead>
-                    <tr>
-                        <th>
-                          <img class="pure-img-responsive" src="/public/img/video.png"></th>
-                        <th>Event</th>
-                        <th>Robot</th>
-                        <th></th>
-                        <th>Date</th>
-                    </tr>
-                </thead>
+                    <tr><td colspan="2" style="text-align: center;"><a
+                                href="/level5/{{.Name}}">{{.Name}} <span style="border-radius: 5%;color: black; padding:
+                                4px; background: #BEBEBE;">
+                                V{{.CurrentVersion}}
+                              </span></a></td>
+                        <tr><td colspan="2">
+                                <div class="robotPic" style="margin: 0 auto;
+                                    border-style: solid; border-width:7px;
+                                    border-color: #{{.Rgb}};">
+                                    <a href="/level5/{{.Name}}"><img
+                                            src="/public/img/level5assets/robotpics/{{.Name2}}_{{.CurrentVersion}}.jpg"
+                                            /></a>
+                                </div>
 
-                <tbody>
-                    {{range .events}}
-                    <tr>
-                        <td>
-                          {{if .VideoExists}}
-                          
-                          <a href="https://www.youtube.com/watch?v={{.Video}}" target="_blank">
-                            <img class="pure-img-responsive" src="/public/img/video.png">
-                          </a>
-                          {{else}}
-            
-                          {{end}}
-            
-                        </td>
-                        <td>{{.Name}}</td>
-                        <td><a href="/level5/{{.Robot}}">{{.Robot}}</a></td>
-                        <td><center>{{if eq .Finish "1st"}} 
-                            <span style="border-radius: 5%;color: black; padding: 4px; background: #FFD739;">
-                            {{else if eq .Finish "2nd"}}
-                            <span style="border-radius: 5%;color: black; padding: 4px; background: #BEBEBE;">
-                            {{else if eq .Finish "3rd"}}
-                            <span style="border-radius: 5%;color: white; padding: 4px; background: #BB8644;">
-                            {{else if eq .Finish "NR"}}
-                            <span style="border-radius: 5%;color: white; padding: 4px; background: #606060;">
-                            {{else if eq .Finish ""}}
-                            <span >
-                            {{else}}
-                            <span style="border-radius: 5%;color: white; padding: 4px; background: #0094B2;">
+                            </td>
+                        </tr>
+                        <tr> <th>Weight Class:</th><td>{{.WeightClass}}</td></tr>
+                        <tr> <th>Weapon Type:</th><td>{{.Weapon}}</td></tr>
+                        <tr> <th>W-L:</th><td>{{.Wins}} - {{.Losses}}
+                                ({{.Winrate}}%)</td></tr>
+                        <tr> <th>Status: </th><td>{{if eq .Status "In Service"}}
+                                <span style="border-radius: 5%;color: white;
+                                    padding: 4px; background: green;">
+                                    {{else if eq .Status "On Hold"}}
+                                    <span style="border-radius: 5%;color: black;
+                                        padding: 4px; background: #BEBEBE;">
+                                        {{else if eq .Status "Retired"}}
+                                        <span style="border-radius: 5%;color:
+                                            white; padding: 4px; background:
+                                            #606060;">
+                                            {{else}}
+                                            <span style="border-radius:
+                                                5%;color: black; padding: 4px;">
+                                                {{end}}
+                                                {{.Status}}</span></td></tr>
+                                </table>
+
+                            </div>
                             {{end}}
-                            {{.Finish}}</span></center></td>
-                        <td>{{.Date}}</td>
-                    </tr>
-                    {{end}}
-                </tbody>
-            </table>
-        </div>
+                            <br>
+                            <hr>
+                            <div style="margin-top:1700px;">
+                                <h2 class="content-subhead">Events</h2>
+                                <table class="pure-table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <img class="pure-img-responsive"
+                                                    src="/public/img/video.png"></th>
+                                            <th>Event</th>
+                                            <th>Robot</th>
+                                            <th></th>
+                                            <th>Date</th>
+                                        </tr>
+                                    </thead>
 
-        </div>
-    </div>
+                                    <tbody>
+                                        {{range .events}}
+                                        <tr>
+                                            <td>
+                                                {{if .VideoExists}}
+
+                                                <a
+                                                    href="https://www.youtube.com/watch?v={{.Video}}"
+                                                    target="_blank">
+                                                    <img
+                                                        class="pure-img-responsive"
+                                                        src="/public/img/video.png">
+                                                </a>
+                                                {{else}}
+
+                                                {{end}}
+
+                                            </td>
+                                            <td>{{.Name}}</td>
+                                            <td><a href="/level5/{{.Robot}}">{{.Robot}}</a></td>
+                                            <td><center>{{if eq .Finish "1st"}}
+                                                    <span style="border-radius:
+                                                        5%;color: black;
+                                                        padding: 4px;
+                                                        background: #FFD739;">
+                                                        {{else if eq .Finish "2nd"}}
+                                                        <span
+                                                            style="border-radius:
+                                                            5%;color: black;
+                                                            padding: 4px;
+                                                            background:
+                                                            #BEBEBE;">
+                                                            {{else if eq .Finish "3rd"}}
+                                                            <span
+                                                                style="border-radius:
+                                                                5%;color: white;
+                                                                padding: 4px;
+                                                                background:
+                                                                #BB8644;">
+                                                                {{else if eq .Finish "NR"}}
+                                                                <span
+                                                                    style="border-radius:
+                                                                    5%;color:
+                                                                    white;
+                                                                    padding:
+                                                                    4px;
+                                                                    background:
+                                                                    #606060;">
+                                                                    {{else if eq .Finish ""}}
+                                                                    <span>
+                                                                        {{else}}
+                                                                        <span
+                                                                            style="border-radius:
+                                                                            5%;color:
+                                                                            white;
+                                                                            padding:
+                                                                            4px;
+                                                                            background:
+                                                                            #0094B2;">
+                                                                            {{end}}
+                                                                            {{.Finish}}</span></center></td>
+                                                                <td>{{.Date}}</td>
+                                                            </tr>
+                                                            {{end}}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+                                        </div>
 
 
 
 
-    <script src="/public/js/ui.js"></script>
+                                        <script src="/public/js/ui.js"></script>
+                                    </body>
 
-</body>
 
-
-<script src="https://www.retainable.io/assets/retainable/rss-embed/retainable-rss-embed.js"></script>
-{{template "footer.html" .}}
+                                    <script
+                                        src="https://www.retainable.io/assets/retainable/rss-embed/retainable-rss-embed.js"></script>
+                                    {{template "footer.html" .}}

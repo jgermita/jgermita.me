@@ -61,8 +61,8 @@
 	}
 	</style>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-	<script src="https://www.youtube.com/iframe_api"></script>
-	<script>
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
 	$(document).ready(function () {
 		var pos = 0,
 			slides = $('.slide'),
@@ -97,8 +97,7 @@
 		})
 	}
   </script>
-  
-  <script>
+<script>
     function showVideo(id) {
       var x = document.getElementById(id);
       if (x.style.display === "none") {
@@ -108,14 +107,12 @@
       }
     }
   </script>
-
 <script>
   function changeVersion(id) {
     document.getElementById("RobotPic").src = "/public/img/level5assets/robotpics/{{.bot.Name2}}_" + id + ".jpg"
     document.getElementById("versionDisplay").innerHTML = "V" + id
   }
 </script>
-
 <style>
   /* Style the tab */
 .tab {
@@ -159,8 +156,9 @@
 
   <div id="main">
     <div class="header">
-      <img class="pure-img-responsive" src="/public/img/level5assets/{{.bot.Logo}}" width="600">
-      
+      <img class="pure-img-responsive"
+        src="/public/img/level5assets/{{.bot.Logo}}" width="600">
+
       <br>
       <br>
     </div>
@@ -171,253 +169,271 @@
       <div class="pure-g">
         <div class="pure-u-9-24">
 
-          
+
           <br>
 
-          
+
           {{if not .bot.Events}}
           {{else}}
-      <table class="pure-table" width="100%">
-        <thead>
-          <tr>
-            <th>Events</th>
-            <th> </th>
-          </tr>
-        </thead>
-
-        <tbody>
-          
-          {{range .bot.Events}}
-          <tr>
-            <td>
-              {{if eq .Report ""}} 
-              
-              {{else}}
-              <a href="#{{.Name}}">{{.Name}}</a>
-              {{end}}
-              
-            </td>
-            <td>
-              
-                {{if eq .Finish "1st"}} 
-                <span style="border-radius: 5%;color: black; padding: 4px; background: #FFD739;">
-                {{else if eq .Finish "2nd"}}
-                <span style="border-radius: 5%;color: black; padding: 4px; background: #BEBEBE;">
-                {{else if eq .Finish "3rd"}}
-                <span style="border-radius: 5%;color: white; padding: 4px; background: #BB8644;">
-                {{else if eq .Finish "NR"}}
-                <span style="border-radius: 5%;color: white; padding: 4px; background: #606060;">
-                {{else if eq .Finish ""}}
-                <span >
-                {{else}}
-                <span style="border-radius: 5%;color: white; padding: 4px; background: #0094B2;">
-                {{end}}
-                {{.Finish}}</span>
-            </td>
-
-          </tr>
-          {{end}}
-        </tbody>
-      </table>
-
-      {{end}}
-        </div>
-        <div class="pure-u-1-24"></div>
-        <div class="pure-u-14-24">
-
-
-          <br>
-
-          <div id="picContainer" class="tabcontent" style="position:relative; text-align:right; font-family: 'Roboto'; font-size: 48px; font-weight:900; font-style: italic; color:white;">
-            <img id="RobotPic" class="pure-img-responsive" src="/public/img/level5assets/robotpics/{{.bot.Name2}}_{{.bot.CurrentVersion}}.jpg">
-            <div id="versionDisplay" style="position: absolute; bottom: 16px; right: 16px; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">V{{.bot.CurrentVersion}}</div>
-            </div>
-            <div class="tab">
-              {{range .bot.Versions}} 
-                  <button class="tablinks"
-                  onclick = "changeVersion('{{.}}')" >V{{.}}</button>
-              
-              {{end}}
-            </div>
-          
-          <hr>
-          {{.bot.Desc}}
-
-          <br>
-          <br>
-          <table class="pure-table pure-table-horizontal" width="100%">
+          <table class="pure-table" width="100%">
+            <thead>
+              <tr>
+                <th>Events</th>
+                <th> </th>
+              </tr>
+            </thead>
 
             <tbody>
 
+              {{range .bot.Events}}
               <tr>
-                
-                <th>Weight Class</th>
-                <td>{{.bot.WeightClass}}</td>
-              </tr>
+                <td>
+                  {{if eq .Report ""}}
 
-              <tr>
-                <th>Weapon</th>
-                <td>{{.bot.Weapon}}</td>
-              </tr>
-              
-              <th>Current Version</th>
-              <td>
+                  {{else}}
+                  <a href="#{{.Name}}">{{.Name}}</a>
+                  {{end}}
 
-                <span style="border-radius: 5%;color: black; padding: 4px; background: #BEBEBE;">
-                  V{{.bot.CurrentVersion}}
-                </span>
-              </td>
-              <tr>
-                <th>Status</th>
-                <td> 
-                    {{if eq .bot.Status "In Service"}} 
-                    <span style="border-radius: 5%;color: white; padding: 4px; background: green;">
-                    {{else if eq .bot.Status "On Hold"}}
-                    <span style="border-radius: 5%;color: black; padding: 4px; background: #BEBEBE;">
-                    {{else if eq .bot.Status "Retired"}}
-                    <span style="border-radius: 5%;color: white; padding: 4px; background: #606060;">
-                    {{else}}
-                    <span style="border-radius: 5%;color: black; padding: 4px;">
+                </td>
+                <td>
+
+                  {{if eq .Finish "1st"}}
+                  <span style="border-radius: 5%;color: black; padding: 4px;
+                    background: #FFD739;">
+                    {{else if eq .Finish "2nd"}}
+                    <span style="border-radius: 5%;color: black; padding: 4px;
+                      background: #BEBEBE;">
+                      {{else if eq .Finish "3rd"}}
+                      <span style="border-radius: 5%;color: white; padding: 4px;
+                        background: #BB8644;">
+                        {{else if eq .Finish "NR"}}
+                        <span style="border-radius: 5%;color: white; padding:
+                          4px; background: #606060;">
+                          {{else if eq .Finish ""}}
+                          <span>
+                            {{else}}
+                            <span style="border-radius: 5%;color: white;
+                              padding: 4px; background: #0094B2;">
+                              {{end}}
+                              {{.Finish}}</span>
+                          </td>
+
+                        </tr>
+                        {{end}}
+                      </tbody>
+                    </table>
+
                     {{end}}
-                    {{.bot.Status}}</span> 
-            </td>
-              </tr>
-              <tr>
-                <th>Career Record</th>
-                <td>{{.bot.Wins}}W - {{.bot.Losses}}L ({{.bot.Winrate}}%)</td>
-              </tr>
-              <tr>
-              </tr>
-              
-            </tbody>
-          </table>
-          <br>
-        </div>
-      </div>
+                  </div>
+                  <div class="pure-u-1-24"></div>
+                  <div class="pure-u-14-24">
 
-<h2> Event Results</h2>
 
-      {{range .bot.Events}}
-      <h3 id="{{.Name}}">{{.Name}}</h3>
-      
-      <div class="pure-g">
-      <div class="pure-u-9-24">
-        📅 <i>{{.Date}}</i> / 📍 <i>{{.Location}}</i><br>
-        📋 <i><a href="{{.Report}}" target="_blank">Report</a></i>
-        {{if eq .Website "" }}{{else}}
-        / 🔗 <i><a href="{{.Website}}" target="_blank">Website</a></i> 
-        {{end}}
-        {{if eq .Bracket "" }}{{else}}
-        / 🏆 <i><a href="{{.Bracket}}" target="_blank">Bracket</a></i>
-        {{end}}<br>
-        <p>
-        <hr>
-          {{.Robot}} placed <b>{{.Finish}}</b>
-          with a bracket record of {{.WinCount}}W - {{.LossCount}}L. 
-          
-        </p>
-      <table class="pure-table" width="100%">
-        <thead>
-          <tr>
-            <th width="20%">
-              <img class="pure-img-responsive" src="/public/img/video.png"></th>
-            <th>#</th>
-            <th>Vs</th>
-            <th>Win</th>
-          </tr>
-        </thead>
+                    <br>
 
-        <tbody>
-        {{range .Fights}}
-        
-        
-            <tr
-            {{if .IsRumble}}
-            style="background:#ffa6007e"
-            {{end}}
-            >
-              <td>
-                {{if .VideoExists}}
-                <a href="/level5/fights/{{.Id}}">
-                <!--<a href="https://www.youtube.com/watch?v={{.Video}}" target="_blank">-->
-                  <img class="pure-img-responsive" src="/public/img/video.png">
-                </a>
-                
-                <!--
+                    <div id="picContainer" class="tabcontent"
+                      style="position:relative; text-align:right; font-family:
+                      'Roboto'; font-size: 48px; font-weight:900; font-style:
+                      italic; color:white;">
+                      <img id="RobotPic" class="pure-img-responsive"
+                        src="/public/img/level5assets/robotpics/{{.bot.Name2}}_{{.bot.CurrentVersion}}.jpg">
+                      <div id="versionDisplay" style="position: absolute;
+                        bottom: 16px; right: 16px; text-shadow: -1px 0 black, 0
+                        1px black, 1px 0 black, 0 -1px black;">V{{.bot.CurrentVersion}}</div>
+                    </div>
+                    <div class="tab">
+                      {{range .bot.Versions}}
+                      <button class="tablinks"
+                        onclick="changeVersion('{{.}}')">V{{.}}</button>
+
+                      {{end}}
+                    </div>
+
+                    <hr>
+                    {{.bot.Desc}}
+
+                    <br>
+                    <br>
+                    <table class="pure-table pure-table-horizontal"
+                      width="100%">
+
+                      <tbody>
+
+                        <tr>
+
+                          <th>Weight Class</th>
+                          <td>{{.bot.WeightClass}}</td>
+                        </tr>
+
+                        <tr>
+                          <th>Weapon</th>
+                          <td>{{.bot.Weapon}}</td>
+                        </tr>
+
+                        <th>Current Version</th>
+                        <td>
+
+                          <span style="border-radius: 5%;color: black; padding:
+                            4px; background: #BEBEBE;">
+                            V{{.bot.CurrentVersion}}
+                          </span>
+                        </td>
+                        <tr>
+                          <th>Status</th>
+                          <td>
+                            {{if eq .bot.Status "In Service"}}
+                            <span style="border-radius: 5%;color: white;
+                              padding: 4px; background: green;">
+                              {{else if eq .bot.Status "On Hold"}}
+                              <span style="border-radius: 5%;color: black;
+                                padding: 4px; background: #BEBEBE;">
+                                {{else if eq .bot.Status "Retired"}}
+                                <span style="border-radius: 5%;color: white;
+                                  padding: 4px; background: #606060;">
+                                  {{else}}
+                                  <span style="border-radius: 5%;color: black;
+                                    padding: 4px;">
+                                    {{end}}
+                                    {{.bot.Status}}</span>
+                                </td>
+                              </tr>
+                              <tr>
+                                <th>Career Record</th>
+                                <td>{{.bot.Wins}}W - {{.bot.Losses}}L
+                                  ({{.bot.Winrate}}%)</td>
+                              </tr>
+                              <tr>
+                              </tr>
+
+                            </tbody>
+                          </table>
+                          <br>
+                        </div>
+                      </div>
+
+                      <h2> Event Results</h2>
+
+                      {{range .bot.Events}}
+                      <h3 id="{{.Name}}">{{.Name}}</h3>
+
+                      <div class="pure-g">
+                        <div class="pure-u-9-24">
+                          📅 <i>{{.Date}}</i> / 📍 <i>{{.Location}}</i><br>
+                          📋 <i><a href="{{.Report}}" target="_blank">Report</a></i>
+                          {{if eq .Website "" }}{{else}}
+                          / 🔗 <i><a href="{{.Website}}" target="_blank">Website</a></i>
+                          {{end}}
+                          {{if eq .Bracket "" }}{{else}}
+                          / 🏆 <i><a href="{{.Bracket}}" target="_blank">Bracket</a></i>
+                          {{end}}<br>
+                          <p>
+                            <hr>
+                            {{.Robot}} placed <b>{{.Finish}}</b>
+                            with a bracket record of {{.WinCount}}W -
+                            {{.LossCount}}L.
+
+                          </p>
+                          <table class="pure-table" width="100%">
+                            <thead>
+                              <tr>
+                                <th width="20%">
+                                  <img class="pure-img-responsive"
+                                    src="/public/img/video.png"></th>
+                                <th>#</th>
+                                <th>Vs</th>
+                                <th>Win</th>
+                              </tr>
+                            </thead>
+
+                            <tbody>
+                              {{range .Fights}}
+
+
+                              <tr
+                                {{if .IsRumble}}
+                                style="background:#ffa6007e"
+                                {{end}}>
+                                <td>
+                                  {{if .VideoExists}}
+                                  <a href="/level5/fights/{{.Id}}">
+                                    <!--<a href="https://www.youtube.com/watch?v={{.Video}}" target="_blank">-->
+                                    <img class="pure-img-responsive"
+                                      src="/public/img/video.png">
+                                  </a>
+
+                                  <!--
                 <input type="image" onclick="showVideo({{.Video}})" src="/public/img/video.png"/>-->
-                
-                {{else}}
-  
-                {{end}}
-  
-              </td>
+                                  {{else}}
 
-              <td><a href="/level5/fights/{{.Id}}">{{.Type}}</a></td>
-  
+                                  {{end}}
 
-              <td>
-                {{.OpponentRobot}}</td>
-              <td>
-                {{if .MyWin}}
-                
-                {{if .IsRumble}}
-                🏆
-                {{else}}
-                ✅
-                {{end}}
-                {{else}}
-                {{if .IsRumble}}
-                -
-                {{else}}
-                ❌
-                {{end}}
-                {{end}}
-  
-                {{end}}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                                </td>
 
-      </div>
-      <div class="pure-u-1-24"></div>
-      <div class="pure-u-14-24">
-        {{if eq .Video ""}}
+                                <td><a href="/level5/fights/{{.Id}}">{{.Type}}</a></td>
+                                <td>
+                                  {{.OpponentRobot}}</td>
+                                <td>
+                                  {{if .MyWin}}
+
+                                  {{if .IsRumble}}
+                                  🏆
+                                  {{else}}
+                                  ✅
+                                  {{end}}
+                                  {{else}}
+                                  {{if .IsRumble}}
+                                  -
+                                  {{else}}
+                                  ❌
+                                  {{end}}
+                                  {{end}}
+
+                                  {{end}}
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                        </div>
+                        <div class="pure-u-1-24"></div>
+                        <div class="pure-u-14-24">
+                          {{if eq .Video ""}}
 
 
-      {{else}}
-      
-      <iframe width="560" height="315" src="https://www.youtube.com/embed/{{.Video}}" frameborder="0"
-      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                          {{else}}
 
-      <br><br>{{end}}
-
-
-
-      </div>
-      
-    </div>
-        <hr>
-      {{end}}
-      {{if not .bot.Events}}
-        {{.bot.Name}} has not yet competed at any events. 
-      {{end}}
-
-      {{if eq .bot.Media ""}}{{else}}
-      <h2>Media</h2>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{.bot.Media}}" frameborder="0"
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-            <br><br>
-          {{end}}
-
-      
-      <br>
-      
-        </div>
-      
+                          <iframe width="560" height="315"
+                            src="https://www.youtube.com/embed/{{.Video}}"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; encrypted-media;
+                            gyroscope; picture-in-picture" allowfullscreen></iframe>
+                          <br><br>{{end}}
 
 
+
+                        </div>
+
+                      </div>
+                      <hr>
+                      {{end}}
+                      {{if not .bot.Events}}
+                      {{.bot.Name}} has not yet competed at any events.
+                      {{end}}
+
+                      {{if eq .bot.Media ""}}{{else}}
+                      <h2>Media</h2>
+                      <iframe width="560" height="315"
+                        src="https://www.youtube.com/embed/{{.bot.Media}}"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; encrypted-media;
+                        gyroscope; picture-in-picture" allowfullscreen></iframe>
+                      <br><br>
+                      {{end}}
+
+
+                      <br>
+
+                    </div>
 
 
 
@@ -426,13 +442,16 @@
 
 
 
-  </div>
-  </div>
+
+
+
+                  </div>
+                </div>
 
 
 
 
-  <script src="/public/js/ui.js"></script>
+                <script src="/public/js/ui.js"></script>
 
-</body>
-{{template "footer.html" .}}
+              </body>
+              {{template "footer.html" .}}
