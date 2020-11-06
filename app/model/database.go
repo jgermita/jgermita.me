@@ -92,7 +92,7 @@ func (database *Database) GetAllRobots() []Robot {
 	)
 
 	// Get robot data
-	rows, err := db.Query("select * from robots order by status asc, weight desc")
+	rows, err := db.Query("select * from robots order by status asc, id desc")
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -323,14 +323,20 @@
                           {{if eq .Website "" }}{{else}}
                           / 🔗 <i><a href="{{.Website}}" target="_blank">Website</a></i>
                           {{end}}
-                          {{if eq .Bracket "" }}{{else}}
+                          {{if eq .Bracket ""}}{{else}}
                           / 🏆 <i><a href="{{.Bracket}}" target="_blank">Bracket</a></i>
                           {{end}}<br>
                           <p>
                             <hr>
+                            {{if eq .Finish "NR"}}
+                            {{.Robot}} did not compete in any official bracket fights.
+                            {{else}}
+
+                            
                             {{.Robot}} placed <b>{{.Finish}}</b>
                             with a bracket record of {{.WinCount}}W -
                             {{.LossCount}}L.
+                            {{end}}
 
                           </p>
                           <table class="pure-table" width="100%">
