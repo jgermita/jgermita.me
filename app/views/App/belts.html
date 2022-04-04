@@ -1,0 +1,107 @@
+{{set . "title" "Belt Center Distance Calculator"}}
+{{template "header.html" .}}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+<body>
+
+  
+      <div id="main">
+          <div class="header">
+              <h1>Belt Center Distance Calculator</h1>
+              <h2>Calculator for belt center distances</h2>
+          </div>
+  
+          <div class="content">
+            <h1>Calculator</h1>
+            <h2>Inputs</h2>
+            <label for="pitch">Pitch (mm)</label>
+            <input id="pitch" value="5"><br>
+            
+            <label for="pA">Pulley A (teeth)</label>
+            <input id="pA" value="18"><br>
+
+            <label for="pB">Pulley B (teeth)</label>
+            <input id="pB" value="18"><br>
+            
+            <label for="length">Belt Length (teeth)</label>
+            <input id="length" value="131"><br>
+            
+            <h2>Output</h2>
+            <label for="ratio">Gear ratio</label>
+            <input id="ratio" readonly><br>
+
+            <label for="output">Center distance</label>
+            <input id="output" readonly> 
+            <input id="outputIn" readonly><br>
+            
+
+
+            <hr>
+            
+          </div>
+      </div>
+  </div>
+  
+  <script>
+
+      
+        function runcalc(){
+            var pA = document.getElementById('pA');
+            var pB = document.getElementById('pB');
+            var pitch = document.getElementById('pitch');
+            var length = document.getElementById('length');
+            
+            var ratio = pB.value / pA.value;
+
+            var pdA = (pA.value * pitch.value) / 3.14159;
+            var pdB = (pB.value * pitch.value) / 3.14159;
+
+            var pitchLength = pitch.value * length.value;
+
+            var b = (4.0 * pitchLength) - (6.28*(pdA + pdB));
+
+            //var cc = (b + Math.sqrt(Math.pow(b, 2.0) - (32.0 * Math.pow((pdA - pdB), 2.0))))/16.0;
+            var cc = (b+ Math.sqrt((b*b)-(32*(Math.pow(pdA-pdB,2)))))/16;
+            var ccIn = cc/25.4;
+
+            $("#output").val((cc).toFixed(2).concat(" mm") );
+            $("#outputIn").val((ccIn).toFixed(3).concat(" in") );
+
+            $("#ratio").val((ratio).toFixed(2) );
+
+        }
+
+
+        $(document).keypress(function(e){
+             if(e.which === 13){
+                 runcalc();
+             }
+         });
+         $(function() {
+        $( document ).tooltip({
+        position: {
+            my: "left top",
+            at: "right-25% bottom+5px"
+        }
+                
+        });
+        });
+        
+        $(document).on("change", "input",function(){
+            runcalc();
+        });
+       
+        $(document).on('change', "select", function() {
+            runcalc();
+        });
+        
+
+    </script>
+  
+  
+  <script src="/public/js/ui.js"></script>
+  
+  </body>
+{{template "footer.html" .}}

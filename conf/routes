@@ -8,7 +8,7 @@ module:testrunner
 
 
 GET     /                                       App.Index
-GET     /me                                     App.me
+# GET     /me                                     App.me
 GET     /level5                                 App.level5
 GET     /projects                               App.projects
 GET     /first                                  App.first
@@ -20,9 +20,10 @@ GET     /w                                   App.w
 GET     /level5/:robot                          App.robot
 GET     /level5/fights/:id                          App.fight
 GET     /todo                          App.todo
-GET     /services                          App.services
-GET     /league                        App.league
+# GET     /services                          App.services
 GET     /crresources                        App.crresources
+GET     /belts                        App.belts
+GET     /chain                        App.chain
 # GET     /countdown                          App.countdown
 # GET     /countdown5012                          App.countdown5012
 # GET     /blog/post                              App.post

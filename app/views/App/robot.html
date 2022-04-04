@@ -160,18 +160,21 @@
         src="/public/img/level5assets/{{.bot.Logo}}" width="600">
 
       <br>
+      
       <br>
+      
     </div>
 
     <div class="content">
+      
 
-      <!--<p>{{.bot.Desc}}</p>-->
+      
       <div class="pure-g">
         <div class="pure-u-9-24">
 
 
           <br>
-
+          
 
           {{if not .bot.Events}}
           {{else}}
@@ -188,11 +191,7 @@
               {{range .bot.Events}}
               <tr>
                 <td>
-                  {{if eq .Report ""}}
-
-                  {{else}}
                   <a href="#{{.Name}}">{{.Name}}</a>
-                  {{end}}
 
                 </td>
                 <td>
@@ -215,45 +214,24 @@
                             <span style="border-radius: 5%;color: white;
                               padding: 4px; background: #0094B2;">
                               {{end}}
-                              {{.Finish}}</span>
+
+                              {{if eq .Finish "NP"}}
+                              {{else}}
+                              {{.Finish}}
+                              {{end}}
+                              </span>
                           </td>
 
                         </tr>
                         {{end}}
                       </tbody>
                     </table>
+                    <br>
+                    
+                    
 
                     {{end}}
-                  </div>
-                  <div class="pure-u-1-24"></div>
-                  <div class="pure-u-14-24">
-
-
-                    <br>
-
-                    <div id="picContainer" class="tabcontent"
-                      style="position:relative; text-align:right; font-family:
-                      'Roboto'; font-size: 48px; font-weight:900; font-style:
-                      italic; color:white;">
-                      <img id="RobotPic" class="pure-img-responsive"
-                        src="/public/img/level5assets/robotpics/{{.bot.Name2}}_{{.bot.CurrentVersion}}.jpg">
-                      <div id="versionDisplay" style="position: absolute;
-                        bottom: 16px; right: 16px; text-shadow: -1px 0 black, 0
-                        1px black, 1px 0 black, 0 -1px black;">V{{.bot.CurrentVersion}}</div>
-                    </div>
-                    <div class="tab">
-                      {{range .bot.Versions}}
-                      <button class="tablinks"
-                        onclick="changeVersion('{{.}}')">V{{.}}</button>
-
-                      {{end}}
-                    </div>
-
-                    <hr>
-                    {{.bot.Desc}}
-
-                    <br>
-                    <br>
+                    
                     <table class="pure-table pure-table-horizontal"
                       width="100%">
 
@@ -275,7 +253,7 @@
 
                           <span style="border-radius: 5%;color: black; padding:
                             4px; background: #BEBEBE;">
-                            V{{.bot.CurrentVersion}}
+                            {{.bot.CurrentVersion}}
                           </span>
                         </td>
                         <tr>
@@ -307,47 +285,93 @@
 
                             </tbody>
                           </table>
-                          <br>
+                          <br><br>
+
+                    <!--<p>{{.bot.Desc}}</p>-->
+                  </div>
+                  <div class="pure-u-1-24"></div>
+                  <div class="pure-u-14-24">
+
+
+                    <br>
+                    {{if eq .bot.Media ""}}{{else}}
+                      
+          <iframe width="560" height="315"
+            src="https://www.youtube.com/embed/{{.bot.Media}}"
+            frameborder="0"
+            allow="accelerometer; autoplay; encrypted-media;
+            gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <br><br>
+          {{end}}
+
+                    
+
+                    
+                    
+                          <div id="picContainer" class="tabcontent"
+                      style="position:relative; text-align:right; font-family:
+                      'Roboto'; font-size: 48px; font-weight:900; font-style:
+                      italic; color:white;">
+                      <img id="RobotPic" class="pure-img-responsive"
+                        src="/public/img/level5assets/robotpics/{{.bot.Name2}}_{{.bot.CurrentVersion}}.jpg">
+                      <div id="versionDisplay" style="position: absolute;
+                        bottom: 16px; right: 16px; text-shadow: -1px 0 black, 0
+                        1px black, 1px 0 black, 0 -1px black;">{{.bot.CurrentVersion}}</div>
+                    </div>
+                    <div class="tab">
+                      {{range .bot.Versions}}
+                      <button class="tablinks"
+                        onclick="changeVersion('{{.}}')">{{.}}</button>
+
+                      {{end}}
+                    </div>
                         </div>
+                        
                       </div>
 
                       <h2> Event Results</h2>
 
                       {{range .bot.Events}}
-                      <h3 id="{{.Name}}">{{.Name}}</h3>
+                      <h4 id="{{.Name}}">{{.Name}}</h4>
 
                       <div class="pure-g">
                         <div class="pure-u-9-24">
                           📅 <i>{{.Date}}</i> / 📍 <i>{{.Location}}</i><br>
-                          📋 <i><a href="{{.Report}}" target="_blank">Report</a></i>
+                          {{if eq .Report "" }}{{else}}📋 <i><a href="{{.Report}}" target="_blank">Report</a></i> / {{end}}
                           {{if eq .Website "" }}{{else}}
-                          / 🔗 <i><a href="{{.Website}}" target="_blank">Website</a></i>
+                          🔗 <i><a href="{{.Website}}" target="_blank">Website</a></i>
                           {{end}}
                           {{if eq .Bracket ""}}{{else}}
                           / 🏆 <i><a href="{{.Bracket}}" target="_blank">Bracket</a></i>
-                          {{end}}<br>
+                          {{end}}
+                          <br><br>
                           <p>
-                            <hr>
                             {{if eq .Finish "NR"}}
-                            {{.Robot}} did not compete in any official bracket fights.
+                            {{.Robot}} was not ranked.
+                            
+                            
+                            {{else if eq .Finish "NP"}}
+                            This event has not yet occurred or is currently in progress.  
                             {{else}}
-
                             
                             {{.Robot}} placed <b>{{.Finish}}</b>
-                            with a bracket record of {{.WinCount}}W -
+                            with a record of {{.WinCount}}W -
                             {{.LossCount}}L.
                             {{end}}
 
                           </p>
+
+                          {{if eq .Finish "NP"}} 
+                          {{else}}
+                          
                           <table class="pure-table" width="100%">
                             <thead>
                               <tr>
                                 <th width="20%">
                                   <img class="pure-img-responsive"
                                     src="/public/img/video.png"></th>
-                                <th>#</th>
                                 <th>Vs</th>
-                                <th>Win</th>
+                                <th></th>
                               </tr>
                             </thead>
 
@@ -375,22 +399,23 @@
 
                                 </td>
 
-                                <td><a href="/level5/fights/{{.Id}}">{{.Type}}</a></td>
                                 <td>
-                                  {{.OpponentRobot}}</td>
+                                  <a href="/level5/fights/{{.Id}}">{{.OpponentRobot}}</a></td>
                                 <td>
                                   {{if .MyWin}}
 
                                   {{if .IsRumble}}
                                   🏆
                                   {{else}}
-                                  ✅
+                                  
+                  <span style="border-radius: 10%;color: Black; padding: 4px; background: #FFD739;">Win</span>
                                   {{end}}
                                   {{else}}
                                   {{if .IsRumble}}
                                   -
                                   {{else}}
-                                  ❌
+                                  
+                  <span style="border-radius: 10%;color: Black; padding: 4px; background: #ff010185;">Loss</span>
                                   {{end}}
                                   {{end}}
 
@@ -399,6 +424,7 @@
                               </tr>
                             </tbody>
                           </table>
+                          {{end}}
 
                         </div>
                         <div class="pure-u-1-24"></div>
@@ -426,15 +452,7 @@
                       {{.bot.Name}} has not yet competed at any events.
                       {{end}}
 
-                      {{if eq .bot.Media ""}}{{else}}
-                      <h2>Media</h2>
-                      <iframe width="560" height="315"
-                        src="https://www.youtube.com/embed/{{.bot.Media}}"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; encrypted-media;
-                        gyroscope; picture-in-picture" allowfullscreen></iframe>
-                      <br><br>
-                      {{end}}
+                      
 
 
                       <br>

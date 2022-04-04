@@ -24,6 +24,14 @@ func (c App) Me() revel.Result {
 	return c.Render()
 }
 
+func (c App) Belts() revel.Result {
+	return c.Render()
+}
+
+func (c App) Chain() revel.Result {
+	return c.Render()
+}
+
 func (c App) Projects() revel.Result {
 	return c.Render()
 }

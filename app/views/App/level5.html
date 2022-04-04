@@ -74,7 +74,7 @@
 
         width: auto;
   height: 100%;
-  margin-left: -40%;
+  margin-left: -20%;
     }
 
     .robotContainer {
@@ -176,7 +176,7 @@
                 <div class="slide-arrow left"></div>
                 <div class="slide-arrow right"></div>
             </div>
-            <br>
+            <br><!--
             <p>
                 Level 5 Robotics is the brand that I've created around the
                 competitive combat robots that I build. All
@@ -186,11 +186,11 @@
                 <br><br>
                 Learn more about my robots below!
             </p>
+            -->
 
 
-            <h2 class="content-subhead">Robots</h2>
-            {{.record}}
-            <br>
+            <!--{{.record}}
+            <br>-->
 
 
 
@@ -247,8 +247,9 @@
                                             <th>
                                                 <img class="pure-img-responsive"
                                                     src="/public/img/video.png"></th>
+                                                    <th>Robot</th>
                                             <th>Event</th>
-                                            <th>Robot</th>
+                                            
                                             <th></th>
                                             <th>Date</th>
                                         </tr>
@@ -272,8 +273,8 @@
                                                 {{end}}
 
                                             </td>
-                                            <td>{{.Name}}</td>
                                             <td><a href="/level5/{{.Robot}}">{{.Robot}}</a></td>
+                                            <td><a href="/level5/{{.Robot}}#{{.Name}}">{{.Name}}</a></td>
                                             <td><center>{{if eq .Finish "1st"}}
                                                     <span style="border-radius:
                                                         5%;color: black;
@@ -332,6 +333,4 @@
                                     </body>
 
 
-                                    <script
-                                        src="https://www.retainable.io/assets/retainable/rss-embed/retainable-rss-embed.js"></script>
                                     {{template "footer.html" .}}

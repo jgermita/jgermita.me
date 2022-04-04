@@ -27,7 +27,7 @@ func (database *Database) OpenDatabase(filename string) {
 	//
 	//
 
-	var localtest = false
+	var localtest = true
 
 	if localtest {
 		fileName = "./app.db"
@@ -92,7 +92,7 @@ func (database *Database) GetAllRobots() []Robot {
 	)
 
 	// Get robot data
-	rows, err := db.Query("select * from robots order by status asc, id desc")
+	rows, err := db.Query("select id, name, description, weight, weapon, status, logo, img, media, highlight_rgb, versions from robots order by lastfought desc, id desc")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -173,7 +173,7 @@ func (database *Database) GetHighlights() []Event {
 	var allEvents []Event
 
 	// Get robot data
-	rows, err := db.Query("select distinct video from events where video IS NOT '' order by date DESC, robot ASC")
+	rows, err := db.Query("select distinct video from events where video IS NOT '' order by id DESC, robot ASC")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -228,7 +228,7 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 	)
 
 	// Get robot data
-	rows, err := db.Query("select * from robots where name = ?", nameQuery)
+	rows, err := db.Query("select id, name, description, weight, weapon, status, logo, img, media, highlight_rgb, versions from robots where name = ?", nameQuery)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -519,7 +519,7 @@ func (database *Database) GetRecord() string {
 	totalLosses = 0
 
 	// Get robot data
-	rows, err := db.Query("select * from robots")
+	rows, err := db.Query("select id, name, description, weight, weapon, status, logo, img, media, highlight_rgb, versions from robots")
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -7,7 +7,7 @@
   <div id="main">
     <div class="header">
 
-      <img  style="border-radius: 50%; width: 5%" src="http://graph.facebook.com/100000112988560/picture?type=large">
+      <img  style="border-radius: 50%; width: 5%" src="/public/img/me.jpg">
       <h1>jeremy paul germita</h1>
       <h2>robot enthusiast</h2>
     </div>
@@ -15,16 +15,10 @@
     <div class="content">
 
 
-      <br>
-      <div id="retainable-rss-embed" 
-          data-rss="https://medium.com/feed/@jeremy.germita"
-          data-maxcols="2" 
-          data-layout="grid" 
-          data-poststyle="inline" 
-          data-readmore="Read more" 
-          data-buttonclass="btn btn-primary" 
-          data-offset="-100"></div>
-
+      <br><div id="medium-widget"></div>
+      <script src="https://medium-widget.pixelpoint.io/widget.js"></script>
+      <script>MediumWidget.Init({renderTo: '#medium-widget', params: {"resource":"https://medium.com/@jeremy.germita","postsPerLine":1,"limit":10,"picture":"big","fields":["description","publishAt"],"ratio":"original"}})</script>
+  
     </div>
   </div>
 
@@ -35,5 +29,4 @@
 
 </body>
 
-<script src="https://www.retainable.io/assets/retainable/rss-embed/retainable-rss-embed.js"></script>
 {{template "footer.html" .}}
