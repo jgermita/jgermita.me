@@ -110,7 +110,7 @@
 <script>
   function changeVersion(id) {
     document.getElementById("RobotPic").src = "/public/img/level5assets/robotpics/{{.bot.Name2}}_" + id + ".jpg"
-    document.getElementById("versionDisplay").innerHTML = "V" + id
+    document.getElementById("versionDisplay").innerHTML = id
   }
 </script>
 <style>
@@ -236,7 +236,27 @@
                       width="100%">
 
                       <tbody>
-
+                        <tr>
+                          <th>Version / Status</th>
+                          <td>
+                          <span style="border-radius: 0%;color: black; padding:
+                            4px; background: #BEBEBE;">
+                            {{.bot.CurrentVersion}}
+                          </span> {{if eq .bot.Status "In Service"}}
+                          <span style="border-radius: 0%;color: white;
+                            padding: 4px; background: green;">
+                            {{else if eq .bot.Status "On Hold"}}
+                            <span style="border-radius: 0%;color: black;
+                              padding: 4px; background: #BEBEBE;">
+                              {{else if eq .bot.Status "Retired"}}
+                              <span style="border-radius: 0%;color: white;
+                                padding: 4px; background: #606060;">
+                                {{else}}
+                                <span style="border-radius: 0%;color: black;
+                                  padding: 4px;">
+                                  {{end}}
+                                  {{.bot.Status}}</span></tr>
+                                </td>
                         <tr>
 
                           <th>Weight Class</th>
@@ -248,33 +268,6 @@
                           <td>{{.bot.Weapon}}</td>
                         </tr>
 
-                        <th>Current Version</th>
-                        <td>
-
-                          <span style="border-radius: 5%;color: black; padding:
-                            4px; background: #BEBEBE;">
-                            {{.bot.CurrentVersion}}
-                          </span>
-                        </td>
-                        <tr>
-                          <th>Status</th>
-                          <td>
-                            {{if eq .bot.Status "In Service"}}
-                            <span style="border-radius: 5%;color: white;
-                              padding: 4px; background: green;">
-                              {{else if eq .bot.Status "On Hold"}}
-                              <span style="border-radius: 5%;color: black;
-                                padding: 4px; background: #BEBEBE;">
-                                {{else if eq .bot.Status "Retired"}}
-                                <span style="border-radius: 5%;color: white;
-                                  padding: 4px; background: #606060;">
-                                  {{else}}
-                                  <span style="border-radius: 5%;color: black;
-                                    padding: 4px;">
-                                    {{end}}
-                                    {{.bot.Status}}</span>
-                                </td>
-                              </tr>
                               <tr>
                                 <th>Career Record</th>
                                 <td>{{.bot.Wins}}W - {{.bot.Losses}}L

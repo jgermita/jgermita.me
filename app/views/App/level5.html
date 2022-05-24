@@ -79,7 +79,7 @@
 
     .robotContainer {
         float: left;
-  width: 33.33%;
+  width: 25%;
   padding-top: 10px;
   padding-right: 5px;
   padding-bottom: 10px;
@@ -199,10 +199,24 @@
                 <table class="pure-table pure-table-horizontal">
 
                     <tr><td colspan="2" style="text-align: center;"><a
-                                href="/level5/{{.Name}}">{{.Name}} <span style="border-radius: 5%;color: black; padding:
+                                href="/level5/{{.Name}}">{{.Name}}</a><br> <span style="border-radius: 0%;color: black; padding:
                                 4px; background: #BEBEBE;">
                                 V{{.CurrentVersion}}
-                              </span></a></td>
+                              </span>{{if eq .Status "In Service"}}
+                              <span style="border-radius: 0%;color: white;
+                                  padding: 4px; background: green;">
+                                  {{else if eq .Status "On Hold"}}
+                                  <span style="border-radius: 0%;color: black;
+                                      padding: 4px; background: #BEBEBE;">
+                                      {{else if eq .Status "Retired"}}
+                                      <span style="border-radius: 0%;color:
+                                          white; padding: 4px; background:
+                                          #606060;">
+                                          {{else}}
+                                          <span style="border-radius:
+                                              0%;color: black; padding: 4px;">
+                                              {{end}}
+                                              {{.Status}}</span></td>
                         <tr><td colspan="2">
                                 <div class="robotPic" style="margin: 0 auto;
                                     border-style: solid; border-width:7px;
@@ -214,34 +228,20 @@
 
                             </td>
                         </tr>
-                        <tr> <th>Weight Class:</th><td>{{.WeightClass}}</td></tr>
-                        <tr> <th>Weapon Type:</th><td>{{.Weapon}}</td></tr>
+                        <tr> <th>Class:</th><td>{{.WeightClass}}</td></tr>
+                        <tr> <th>Weapon:</th><td>{{.Weapon}}</td></tr>
                         <tr> <th>W-L:</th><td>{{.Wins}} - {{.Losses}}
                                 ({{.Winrate}}%)</td></tr>
-                        <tr> <th>Status: </th><td>{{if eq .Status "In Service"}}
-                                <span style="border-radius: 5%;color: white;
-                                    padding: 4px; background: green;">
-                                    {{else if eq .Status "On Hold"}}
-                                    <span style="border-radius: 5%;color: black;
-                                        padding: 4px; background: #BEBEBE;">
-                                        {{else if eq .Status "Retired"}}
-                                        <span style="border-radius: 5%;color:
-                                            white; padding: 4px; background:
-                                            #606060;">
-                                            {{else}}
-                                            <span style="border-radius:
-                                                5%;color: black; padding: 4px;">
-                                                {{end}}
-                                                {{.Status}}</span></td></tr>
+                        
                                 </table>
 
                             </div>
                             {{end}}
                             <br>
                             <hr>
-                            <div style="margin-top:1700px;">
+                            <div style="margin-top:950px;">
                                 <h2 class="content-subhead">Events</h2>
-                                <table class="pure-table">
+                                <table class="pure-table" style="">
                                     <thead>
                                         <tr>
                                             <th>
