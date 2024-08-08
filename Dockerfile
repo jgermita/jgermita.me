@@ -1,5 +1,5 @@
 # Use the official go docker image built on debian.
-FROM golang:1.13
+FROM golang:1.17
 
 # Grab the source code and add it to the workspace.
 ADD . src/github.com/jgermita/jgermita.me

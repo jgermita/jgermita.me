@@ -2,7 +2,7 @@
 {{template "header.html" .}}
 
 <style>
-	
+   
 	/* Additionnal styles */
 	.video-slider {
 		width: 100%;
@@ -75,11 +75,13 @@
         width: auto;
   height: 100%;
   margin-left: -20%;
+  
     }
 
     .robotContainer {
         float: left;
   width: 25%;
+  height: 450px;
   padding-top: 10px;
   padding-right: 5px;
   padding-bottom: 10px;
@@ -94,6 +96,7 @@
     .eventsContainer {
         float: left;
         position: relative;
+        
     }
 
 
@@ -135,6 +138,15 @@
 			slide.video = new YT.Player(iframe)
 		})
 	}
+
+    function showPastEvents() {
+        var x = document.getElementById("pastevents");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
 	</script>
 <body>
 
@@ -144,10 +156,10 @@
             <div class="pure-g">
                 <div class="pure-u-1-1">
                     <img class="pure-img-responsive"
-                        src="/public/img/l5logosmall.png">
+                        src="/public/img/l5logosmall.png" style="width:30%;">
                     <br><br>
                 </div>
-            </div>
+            </div>  
         </div>
 
         <div class="content">
@@ -176,87 +188,71 @@
                 <div class="slide-arrow left"></div>
                 <div class="slide-arrow right"></div>
             </div>
-            <br><!--
-            <p>
-                Level 5 Robotics is the brand that I've created around the
-                competitive combat robots that I build. All
-                of my robots are designed by myself using Autodesk Inventor and
-                manufactured using a variety of machines and tools.
-
-                <br><br>
-                Learn more about my robots below!
-            </p>
-            -->
-
-
-            <!--{{.record}}
-            <br>-->
-
-
-
+            <br>
             {{range .bots}}
-            <div class="robotContainer">
-                <table class="pure-table pure-table-horizontal">
 
-                    <tr><td colspan="2" style="text-align: center;"><a
-                                href="/level5/{{.Name}}">{{.Name}}</a><br> <span style="border-radius: 0%;color: black; padding:
-                                4px; background: #BEBEBE;">
-                                V{{.CurrentVersion}}
-                              </span>{{if eq .Status "In Service"}}
-                              <span style="border-radius: 0%;color: white;
-                                  padding: 4px; background: green;">
-                                  {{else if eq .Status "On Hold"}}
-                                  <span style="border-radius: 0%;color: black;
-                                      padding: 4px; background: #BEBEBE;">
-                                      {{else if eq .Status "Retired"}}
-                                      <span style="border-radius: 0%;color:
-                                          white; padding: 4px; background:
-                                          #606060;">
-                                          {{else}}
-                                          <span style="border-radius:
-                                              0%;color: black; padding: 4px;">
-                                              {{end}}
-                                              {{.Status}}</span></td>
-                        <tr><td colspan="2">
+            {{if eq .Status "In Service"}}
+            <div class="robotContainer">
+                <table class="pure-table pure-table-horizontal" style="height:400px">
+
+                    
+                        <thead style="height:290px; vertical-align: top;"><td colspan="2"><center>
+                            <a href="/level5/{{.Name}}"><b>{{.Name}}</b></a></span>
                                 <div class="robotPic" style="margin: 0 auto;
-                                    border-style: solid; border-width:7px;
+                                    border-style: solid; border-width:8px;
                                     border-color: #{{.Rgb}};">
                                     <a href="/level5/{{.Name}}"><img
                                             src="/public/img/level5assets/robotpics/{{.Name2}}_{{.CurrentVersion}}.jpg"
                                             /></a>
-                                </div>
-
-                            </td>
-                        </tr>
-                        <tr> <th>Class:</th><td>{{.WeightClass}}</td></tr>
-                        <tr> <th>Weapon:</th><td>{{.Weapon}}</td></tr>
-                        <tr> <th>W-L:</th><td>{{.Wins}} - {{.Losses}}
-                                ({{.Winrate}}%)</td></tr>
+                                            
+                                </div><br>
+                                {{range .Events}}{{if eq .Finish "1st"}}
+                🥇
+                {{end}}
                         
-                                </table>
+                        {{end}}
+                        {{if eq .Name "Ditto"}}
+                        <br><span style="border-radius:
+                        5%;color: black;
+                        padding: 4px;
+                        background: #FFD739;">2024 National Champion</span>
+                        {{end}} </center>
 
+                                    </td>
+                                </thead>
+                                <tr> <th>Class:</th><td>{{.WeightClass}}</td></tr>
+                                <!--<tr> <th>Weapon:</th><td>{{.Weapon}}</td></tr>-->
+                                <tr> <th>Win/Loss:</th><td>{{.Wins}} - {{.Losses}} ({{.Winrate}}%)</td></tr>
+                            </table>
                             </div>
-                            {{end}}
-                            <br>
+                            {{end}}{{end}}
+                            <br><br>
                             <hr>
-                            <div style="margin-top:950px;">
-                                <h2 class="content-subhead">Events</h2>
+                            
+                           
+                            <div style="margin-top:2200px;">
+                                
+                            <h2 class="content-subhead">Past Events</h2>
+                            <button onclick="showPastEvents()">Show/Hide</button>
+                            <br>
+                            <div id="pastevents" style="display:none;">
                                 <table class="pure-table" style="">
                                     <thead>
                                         <tr>
                                             <th>
                                                 <img class="pure-img-responsive"
                                                     src="/public/img/video.png"></th>
-                                                    <th>Robot</th>
                                             <th>Event</th>
                                             
                                             <th></th>
-                                            <th>Date</th>
                                         </tr>
                                     </thead>
 
+
                                     <tbody>
                                         {{range .events}}
+                                        {{if (eq .Finish "NP")}} 
+                                        {{else}}
                                         <tr>
                                             <td>
                                                 {{if .VideoExists}}
@@ -273,9 +269,9 @@
                                                 {{end}}
 
                                             </td>
-                                            <td><a href="/level5/{{.Robot}}">{{.Robot}}</a></td>
-                                            <td><a href="/level5/{{.Robot}}#{{.Name}}">{{.Name}}</a></td>
-                                            <td><center>{{if eq .Finish "1st"}}
+                                            <td><a href="/level5/{{.Robot}}">{{.Robot}}</a> @ 
+                                            <a href="/level5/{{.Robot}}#{{.Name}}">{{.Name}}</a> ({{.Date}})</td>
+                                            <td>{{if eq .Finish "1st"}}
                                                     <span style="border-radius:
                                                         5%;color: black;
                                                         padding: 4px;
@@ -315,12 +311,21 @@
                                                                             background:
                                                                             #0094B2;">
                                                                             {{end}}
-                                                                            {{.Finish}}</span></center></td>
-                                                                <td>{{.Date}}</td>
+
+                                                                            {{if eq .Finish "NP"}}
+                                                                            Upcoming
+                                                                            {{else if eq .Finish "NR"}}
+                                                                            Unranked
+                                                                            {{else}}
+                                                                            {{.Finish}}
+                                                                        {{end}}</span></td>
                                                             </tr>
+                                                            {{end}}
                                                             {{end}}
                                                         </tbody>
                                                     </table>
+                                                </div>
+                                      
                                                 </div>
 
                                             </div>
@@ -331,6 +336,8 @@
 
                                         <script src="/public/js/ui.js"></script>
                                     </body>
+
+                                    
 
 
                                     {{template "footer.html" .}}

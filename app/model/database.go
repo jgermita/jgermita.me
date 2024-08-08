@@ -22,11 +22,10 @@ type Database struct {
 	db   *sql.DB
 }
 
+
 // Open the database connection
 func (database *Database) OpenDatabase(filename string) {
-	//
-	//
-
+	
 	var localtest = true
 
 	if localtest {
@@ -70,6 +69,7 @@ func (database *Database) Close() {
 }
 
 func (database *Database) GetAllRobots() []Robot {
+
 	db, err := sql.Open("sqlite3",
 		fileName)
 	if err != nil {
@@ -113,6 +113,56 @@ func (database *Database) GetAllRobots() []Robot {
 	}
 
 	return allRobots
+}
+
+
+func (database *Database) GetUpcomingEvents() []Event {
+	db, err := sql.Open("sqlite3",
+		fileName)
+	if err != nil {
+		log.Fatal(err)
+	}
+	var allEvents []Event
+
+	// Get robot data
+	rows, err := db.Query("select name, robot, finish, date, report, video from events  where finish = 'NP' order by id DESC, robot ASC")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+	for rows.Next() {
+		// var thisEvent string
+		var thisEvent Event
+
+		var eName string
+		var eRobot string
+		var eFinish string
+		var eDate string
+		var eReport string
+		var eVideo string
+
+		err := rows.Scan(&eName, &eRobot, &eFinish, &eDate, &eReport, &eVideo)
+		if err != nil {
+			log.Fatal(err)
+		}
+		thisEvent.Name = eName
+		thisEvent.Finish = eFinish
+		thisEvent.Robot = eRobot
+		thisEvent.Date = eDate
+		thisEvent.Report = eReport
+		thisEvent.Video = eVideo
+
+		thisEvent.VideoExists = eVideo != ""
+
+		allEvents = append(allEvents, thisEvent)
+
+	}
+	err = rows.Err()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return allEvents
 }
 
 func (database *Database) GetAllEvents() []Event {
@@ -225,17 +275,18 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 		desc        string
 		rgb         string
 		versions    string
+		rce			string
 	)
 
 	// Get robot data
-	rows, err := db.Query("select id, name, description, weight, weapon, status, logo, img, media, highlight_rgb, versions from robots where name = ?", nameQuery)
+	rows, err := db.Query("select id, name, description, weight, weapon, status, logo, img, media, highlight_rgb, versions, rce from robots where name = ?", nameQuery)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer rows.Close()
 	for rows.Next() {
 
-		err := rows.Scan(&Id, &Name, &desc, &WeightClass, &weapon, &Status, &logo, &img, &media, &rgb, &versions)
+		err := rows.Scan(&Id, &Name, &desc, &WeightClass, &weapon, &Status, &logo, &img, &media, &rgb, &versions, &rce)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -246,6 +297,7 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 		thisBot.Status = Status
 		thisBot.Desc = desc
 		thisBot.Rgb = rgb
+		thisBot.Rce = rce
 
 		v_temp := strings.Split(versions, ",")
 		for i := 0; i < len(v_temp)/2; i++ {
@@ -314,7 +366,7 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 
 			var loss = 0
 			var win = 0
-			println(thisBot.Name, thisEvent.Name)
+			//println(thisBot.Name, thisEvent.Name)
 			stmt, err := db.Prepare("select * from fights where myRobot = ? AND event = ?")
 			eFights, err := stmt.Query(thisBot.Name, thisEvent.Name)
 			for eFights.Next() {
@@ -328,8 +380,9 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 					Video         string
 					Recap         string
 					Type          string
+					Year		  int
 				)
-				err := eFights.Scan(&FightId, &Event, &MyRobot, &OpponentRobot, &MyWin, &Video, &Recap, &Type)
+				err := eFights.Scan(&FightId, &Event, &MyRobot, &OpponentRobot, &MyWin, &Video, &Recap, &Type, &Year)
 				if err != nil {
 					log.Fatal(err)
 				}
@@ -344,7 +397,8 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 				eFight.Video = Video
 				eFight.Recap = Recap
 				eFight.Type = Type
-				eFight.IsRumble = Type == "Rumble"
+				eFight.IsRumble = (Type == "Rumble")
+				eFight.Year = Year
 
 				eFight.VideoExists = Video != ""
 
@@ -404,9 +458,10 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 		Video         string
 		Recap         string
 		Type          string
+		Year		  int
 	)
 	for rows.Next() {
-		err := rows.Scan(&FightId, &Event, &MyRobot, &OpponentRobot, &MyWin, &Video, &Recap, &Type)
+		err := rows.Scan(&FightId, &Event, &MyRobot, &OpponentRobot, &MyWin, &Video, &Recap, &Type, &Year)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -419,6 +474,7 @@ func (database *Database) GetRobot(nameQuery string) Robot {
 		thisFight.MyWin = MyWin
 		thisFight.Video = Video
 		thisFight.Type = Type
+		thisFight.Year = Year
 
 		thisFight.VideoExists = Video != ""
 
@@ -458,9 +514,10 @@ func (database *Database) GetFight(id string) Fight {
 		Video         string
 		Recap         string
 		Type          string
+		Year		  int
 	)
 	for rows.Next() {
-		err := rows.Scan(&FightId, &Event, &MyRobot, &OpponentRobot, &MyWin, &Video, &Recap, &Type)
+		err := rows.Scan(&FightId, &Event, &MyRobot, &OpponentRobot, &MyWin, &Video, &Recap, &Type, &Year)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -473,9 +530,10 @@ func (database *Database) GetFight(id string) Fight {
 		thisFight.Video = Video
 		thisFight.Recap = Recap
 		thisFight.Type = Type
+		thisFight.Year = Year
 
-		thisFight.IsRumble = FightId > 99990000
-		println(Video)
+		thisFight.IsRumble = thisFight.Type == "Rumble"
+		//println(Video)
 
 		thisFight.VideoExists = Video != ""
 

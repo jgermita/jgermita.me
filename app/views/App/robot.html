@@ -150,7 +150,27 @@
   border-bottom: none;
 }
 
+
+details > summary {
+  padding: 2px 6px;
+  width: 15em;
+  border: none;
+  cursor: pointer;
+  list-style: none;
+}
+
 </style>
+<script>
+  function showPastEvents() {
+        var x = document.getElementById("allevents");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>
+
 <body>
 
 
@@ -175,9 +195,71 @@
 
           <br>
           
+          <table class="pure-table pure-table-horizontal"
+          width="100%">
+
+          <tbody>
+            <tr>
+              
+              <th colspan="2"><Center>{{.bot.Name}}
+              <span style="border-radius: 0%;color: black; padding:
+                4px; background: #BEBEBE;">
+                V{{.bot.CurrentVersion}}
+                
+              </span></center>
+              </td></th></tr>
+                    
+            <tr>
+
+              <th>Weight Class</th>
+              <td>{{.bot.WeightClass}}</td>
+            </tr>
+
+            <tr>
+              <th>Weapon</th>
+              <td>{{.bot.Weapon}}</td>
+            </tr>
+
+                  <tr>
+                    <th>Career Record</th>
+                    <td>{{.bot.Wins}}W - {{.bot.Losses}}L
+                      ({{.bot.Winrate}}%)
+                      </td>
+                  </tr>
+                  
+                  <tr>
+                  </tr>
+                  <tr>
+                    <th>Current RCL Rank:</th><td><a href="{{.bot.Rce}}">{{.rank}}</a></td>
+                  </tr>
+                  <!--<tr> <td colspan="2"><b>Name Origin: </b> {{.bot.Desc}} </td> </tr>-->
+                  <tr> <td colspan="2">
+                    <center>{{if eq .bot.Name "Ditto"}}
+                    <span style="border-radius:
+                    5%;color: black;
+                    padding: 4px;
+                    background: #FFD739;">2024 National Champion</span><br>
+                    {{end}}
+                {{range .bot.Events}}
+                {{if eq .Finish "1st"}}
+                <a href="#{{.Name}}" title="1st place @ {{.Name}}">🥇</a>
+                {{else if eq .Finish "2nd"}}
+                <a href="#{{.Name}}" title="2nd place @ {{.Name}}">🥈</a>
+                {{else if eq .Finish "3rd"}}
+                <a href="#{{.Name}}" title="3rd place @ {{.Name}}">🥉</a>
+                {{end}}
+  
+                {{end}}</center></td></tr>
+                </tbody>
+              </table>
+              <br>
 
           {{if not .bot.Events}}
+
           {{else}}
+          <button onclick="showPastEvents()">Show/Hide All Events</button>
+          <br><br>
+          <div id="allevents" style="display:none">
           <table class="pure-table" width="100%">
             <thead>
               <tr>
@@ -189,12 +271,17 @@
             <tbody>
 
               {{range .bot.Events}}
+              {{if eq .Finish "NP"}}
+              {{else}}
               <tr>
                 <td>
                   <a href="#{{.Name}}">{{.Name}}</a>
+                  
+                  
 
                 </td>
                 <td>
+                  
 
                   {{if eq .Finish "1st"}}
                   <span style="border-radius: 5%;color: black; padding: 4px;
@@ -207,7 +294,7 @@
                         background: #BB8644;">
                         {{else if eq .Finish "NR"}}
                         <span style="border-radius: 5%;color: white; padding:
-                          4px; background: #606060;">
+                          4px; background: #606060; font-size:10px;">
                           {{else if eq .Finish ""}}
                           <span>
                             {{else}}
@@ -216,78 +303,54 @@
                               {{end}}
 
                               {{if eq .Finish "NP"}}
+                              Upcoming
+                              {{else if eq .Finish "NR"}}
+                              -
                               {{else}}
                               {{.Finish}}
-                              {{end}}
+                          {{end}}
                               </span>
                           </td>
 
                         </tr>
+                        
+                        {{end}}
                         {{end}}
                       </tbody>
                     </table>
+                  </div>
                     <br>
                     
                     
 
                     {{end}}
                     
-                    <table class="pure-table pure-table-horizontal"
-                      width="100%">
-
-                      <tbody>
-                        <tr>
-                          <th>Version / Status</th>
-                          <td>
-                          <span style="border-radius: 0%;color: black; padding:
-                            4px; background: #BEBEBE;">
-                            {{.bot.CurrentVersion}}
-                          </span> {{if eq .bot.Status "In Service"}}
-                          <span style="border-radius: 0%;color: white;
-                            padding: 4px; background: green;">
-                            {{else if eq .bot.Status "On Hold"}}
-                            <span style="border-radius: 0%;color: black;
-                              padding: 4px; background: #BEBEBE;">
-                              {{else if eq .bot.Status "Retired"}}
-                              <span style="border-radius: 0%;color: white;
-                                padding: 4px; background: #606060;">
-                                {{else}}
-                                <span style="border-radius: 0%;color: black;
-                                  padding: 4px;">
-                                  {{end}}
-                                  {{.bot.Status}}</span></tr>
-                                </td>
-                        <tr>
-
-                          <th>Weight Class</th>
-                          <td>{{.bot.WeightClass}}</td>
-                        </tr>
-
-                        <tr>
-                          <th>Weapon</th>
-                          <td>{{.bot.Weapon}}</td>
-                        </tr>
-
-                              <tr>
-                                <th>Career Record</th>
-                                <td>{{.bot.Wins}}W - {{.bot.Losses}}L
-                                  ({{.bot.Winrate}}%)</td>
-                              </tr>
-                              <tr>
-                              </tr>
-
-                            </tbody>
-                          </table>
                           <br><br>
 
                     <!--<p>{{.bot.Desc}}</p>-->
                   </div>
                   <div class="pure-u-1-24"></div>
                   <div class="pure-u-14-24">
+<br>
+                    <div id="picContainer" class="tabcontent"
+                    style="position:relative; text-align:right; font-family:
+                    'Roboto'; font-size: 48px; font-weight:900; font-style:
+                    italic; color:white;">
+                    <img id="RobotPic" class="pure-img-responsive"
+                      src="/public/img/level5assets/robotpics/{{.bot.Name2}}_{{.bot.CurrentVersion}}.jpg">
+                    <!--<div id="versionDisplay" style="position: absolute;
+                      bottom: 16px; right: 16px; text-shadow: -1px 0 black, 0
+                      1px black, 1px 0 black, 0 -1px black;">{{.bot.CurrentVersion}}</div>
+                    --></div>
+                  <div class="tab">
+                    {{range .bot.Versions}}
+                    <button class="tablinks"
+                      onclick="changeVersion('{{.}}')">{{.}}</button>
 
-
+                    {{end}}
+                  </div>
                     <br>
-                    {{if eq .bot.Media ""}}{{else}}
+                    <!--{{if eq .bot.Media ""}}{{else}}
                       
           <iframe width="560" height="315"
             src="https://www.youtube.com/embed/{{.bot.Media}}"
@@ -296,36 +359,68 @@
             gyroscope; picture-in-picture" allowfullscreen></iframe>
           <br><br>
           {{end}}
+                -->
 
                     
 
                     
                     
-                          <div id="picContainer" class="tabcontent"
-                      style="position:relative; text-align:right; font-family:
-                      'Roboto'; font-size: 48px; font-weight:900; font-style:
-                      italic; color:white;">
-                      <img id="RobotPic" class="pure-img-responsive"
-                        src="/public/img/level5assets/robotpics/{{.bot.Name2}}_{{.bot.CurrentVersion}}.jpg">
-                      <div id="versionDisplay" style="position: absolute;
-                        bottom: 16px; right: 16px; text-shadow: -1px 0 black, 0
-                        1px black, 1px 0 black, 0 -1px black;">{{.bot.CurrentVersion}}</div>
-                    </div>
-                    <div class="tab">
-                      {{range .bot.Versions}}
-                      <button class="tablinks"
-                        onclick="changeVersion('{{.}}')">{{.}}</button>
-
-                      {{end}}
-                    </div>
+                          
                         </div>
                         
                       </div>
 
-                      <h2> Event Results</h2>
+                      {{if true}}
+                      <!--<h2>Upcoming Events</h2>-->
+                      
+                        
+                      {{range .bot.Events}}
+                      {{if eq .Finish "NP"}}
+                      <h4 id="{{.Name}}">{{.Name}}</h4>
+
+                      <div class="pure-g">
+                        <div class="pure-u-9-24">
+                          📅 <i>{{.Date}}</i> / 📍 <i>{{.Location}}</i><br>
+                          {{if eq .Report "" }}{{else}}📋 <i><a href="{{.Report}}" target="_blank">Report</a></i> / {{end}}
+                          {{if eq .Website "" }}{{else}}
+                          🔗 <i><a href="{{.Website}}" target="_blank">Website</a></i>
+                          {{end}}
+                          {{if eq .Bracket ""}}{{else}}
+                          / 🏆 <i><a href="{{.Bracket}}" target="_blank">Bracket</a></i>
+                          {{end}}
+                          <br><br>
+
+
+                        </div>
+                        <div class="pure-u-1-24"></div>
+                        <div class="pure-u-14-24">
+                         
+
+
+                        </div>
+
+                      </div>
+                      <hr>
+                      {{end}}
+                      {{end}}
+                      {{end}}
+                    
+
+                      <h2>Past Events</h2>
 
                       {{range .bot.Events}}
-                      <h4 id="{{.Name}}">{{.Name}}</h4>
+
+                      {{if eq .Finish "NP"}}
+                      {{else}}
+                      <h4 id="{{.Name}}">
+                        {{if eq .Finish "1st"}}
+                      <a href="#{{.Name}}" title="1st place @ {{.Name}}">🥇</a>
+                      {{else if eq .Finish "2nd"}}
+                      <a href="#{{.Name}}" title="2nd place @ {{.Name}}">🥈</a>
+                      {{else if eq .Finish "3rd"}}
+                      <a href="#{{.Name}}" title="3rd place @ {{.Name}}">🥉</a>
+                      {{end}}
+                        {{if eq .Finish "NP"}} (Upcoming) {{end}}{{.Name}}</h4>
 
                       <div class="pure-g">
                         <div class="pure-u-9-24">
@@ -344,7 +439,7 @@
                             
                             
                             {{else if eq .Finish "NP"}}
-                            This event has not yet occurred or is currently in progress.  
+                            <!--This event has not yet occurred or is currently in progress.  -->
                             {{else}}
                             
                             {{.Robot}} placed <b>{{.Finish}}</b>
@@ -360,7 +455,7 @@
                           <table class="pure-table" width="100%">
                             <thead>
                               <tr>
-                                <th width="20%">
+                                <th width="12%">
                                   <img class="pure-img-responsive"
                                     src="/public/img/video.png"></th>
                                 <th>Vs</th>
@@ -440,6 +535,8 @@
 
                       </div>
                       <hr>
+
+                      {{end}}
                       {{end}}
                       {{if not .bot.Events}}
                       {{.bot.Name}} has not yet competed at any events.
@@ -471,4 +568,6 @@
                 <script src="/public/js/ui.js"></script>
 
               </body>
+
+              
               {{template "footer.html" .}}

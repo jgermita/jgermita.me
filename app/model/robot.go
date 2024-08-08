@@ -18,6 +18,7 @@ type Robot struct {
 	Rgb            string
 	Versions       []string
 	CurrentVersion string
+	Rce				string
 
 	Winrate float64
 }

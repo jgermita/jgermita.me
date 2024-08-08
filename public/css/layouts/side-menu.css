@@ -88,7 +88,7 @@ appears on the left side of the page.
     left: 0;
     bottom: 0;
     z-index: 1000; /* so the menu or its navicon stays above all content */
-    background: #050505;
+    background: #202020;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     font-family: 'Roboto', sans-serif;
@@ -135,7 +135,7 @@ appears on the left side of the page.
         font-weight:900;
         font-style: italic;
 
-        background: #6f4a8e;
+        background: #408BCA;
     }
         /*
         This styles a link within a selected menu item `<li>`.
@@ -170,8 +170,8 @@ small screens.
     display: block; /* show this only on small screens */
     top: 0;
     left: 0; /* "#menu width" */
-    background: #000;
-    background: rgba(0,0,0,0.7);
+    background: #303030;
+    background: #303030;
     font-size: 10px; /* change this value to increase/decrease button size */
     z-index: 10;
     width: 2em;
@@ -181,7 +181,7 @@ small screens.
 
     .menu-link:hover,
     .menu-link:focus {
-        background: #000;
+        background: #303030;
     }
 
     .menu-link span {
@@ -255,9 +255,9 @@ Hides the menu at `48em`, but modify this based on your app's needs.
 }
 
 .pager, .older, .newer, button, .btn, .btn-primary {
-    background-color: #221f3b;
+    background-color: #303030;
     border: none;
-    border-color:  #221f3b;
+    border-color:  #303030;
     color: white;
     border-radius: 0%;
 }

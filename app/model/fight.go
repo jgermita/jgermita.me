@@ -11,4 +11,5 @@ type Fight struct {
 	Recap         string
 	IsRumble      bool
 	Type          string
+	Year		  int
 }

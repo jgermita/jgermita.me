@@ -11,17 +11,18 @@ GET     /                                       App.Index
 # GET     /me                                     App.me
 GET     /level5                                 App.level5
 GET     /projects                               App.projects
-GET     /first                                  App.first
-GET     /software                               App.software
+# GET     /first                                  App.first
+# GET     /software                               App.software
 GET     /blog                                   App.blog
 GET     /dt                                   App.dt
 GET     /dt_brushed                                   App.dtbrushed
 GET     /w                                   App.w
 GET     /level5/:robot                          App.robot
 GET     /level5/fights/:id                          App.fight
-GET     /todo                          App.todo
+# GET     /todo                          App.todo
 # GET     /services                          App.services
 GET     /crresources                        App.crresources
+# GET     /card                        App.card
 GET     /belts                        App.belts
 GET     /chain                        App.chain
 # GET     /countdown                          App.countdown
